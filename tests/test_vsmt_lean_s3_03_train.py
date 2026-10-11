@@ -253,7 +253,7 @@ class S3RulesTests(unittest.TestCase):
                 self.assertEqual(settings["uses"], "grouped" if grouped else "total")
                 self.assertEqual(settings["label_source"], "heuristic" if arm == "HeuristicLabel" else "teacher")
         with self.assertRaises(s3.LeanS3_03Error):
-            s3.training_settings("NoVersion", 1)  # NoVersion uses VSMT-lean's heads (ruling 99-1)
+            s3.training_settings("NoVersion", 1)  # NoVersion uses Rb-ERI's heads (ruling 99-1)
 
 
 EPISODES = ("h1", "h2", "h3", "h4")

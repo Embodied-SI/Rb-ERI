@@ -1,4 +1,4 @@
-"""D-224 / S2-03 tests for VSMT-lean's learned cost heads.
+"""D-224 / S2-03 tests for Rb-ERI's learned cost heads.
 
 Pinned here: the three heads have the registered architecture and an exact parameter count; the
 scorer returns logits keyed exactly by the sealed rows; permuting the fragments of a frame or the
@@ -134,7 +134,7 @@ class ArchitectureTests(unittest.TestCase):
         self.assertFalse(model.is_assoc_only(heads))
 
     def test_assoc_only_and_the_full_model_start_from_the_same_association_and_birth_heads(self) -> None:
-        """Ruling 79-5 (a): the causal counterfactual differs from VSMT-lean only by the existence head, not by its init."""
+        """Ruling 79-5 (a): the causal counterfactual differs from Rb-ERI only by the existence head, not by its init."""
 
         full = model.make_heads(assoc_only=False, seed=7)
         assoc = model.make_heads(assoc_only=True, seed=7)

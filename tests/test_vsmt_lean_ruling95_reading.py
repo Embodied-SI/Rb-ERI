@@ -1,6 +1,6 @@
 """D-224 / S2-R tests: the ruling 95 (a) reading on hand-made merged audits (five seeds per learned arm, four rule arms).
 
-A Missing residual rate that is established lower for VSMT-lean, with node F1 and identity continuity not established worse,
+A Missing residual rate that is established lower for Rb-ERI, with node F1 and identity continuity not established worse,
 reads as a gain on the development set; the same Missing gain with node F1 established worse reads as a trade-off; Missing
 gaps of mixed sign read as no gain shown.  The 85-4 ratio is taken against the best rule arm and the 89-4 lines are only
 reported.  A missing rule arm is refused.  CPU only.

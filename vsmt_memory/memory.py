@@ -1,4 +1,4 @@
-"""``VSMTMemory``: the VSMT-lean entity memory driven frame by frame from an RGB-D stream.
+"""``VSMTMemory``: the Rb-ERI entity memory driven frame by frame from an RGB-D stream.
 
 Each call to ``step`` runs the frozen per-frame loop ``vsmt.lean_runner.run_frame`` for the arm ``VSMT-lean``: entity
 geometry by the per-point depth test, recall, the sealed association/birth features, the three learned cost heads, one
@@ -127,7 +127,7 @@ def entity_records(memory: Mapping[str, Any]) -> list[EntityRecord]:
 
 
 class VSMTMemory:
-    """The VSMT-lean memory of one stream (one episode).
+    """The Rb-ERI memory of one stream (one episode).
 
     Construct it with ``from_pretrained`` for the released weights, then call ``step`` once per RGB-D frame in time
     order.  Poses must be causal (from odometry or SLAM up to the current frame) and expressed in one fixed world frame

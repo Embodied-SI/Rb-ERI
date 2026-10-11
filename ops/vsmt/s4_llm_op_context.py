@@ -10,7 +10,7 @@ reports, 43 episodes per run), the per-episode validation cache receipts (frames
 receipt (each arm's selected configuration), the committed S3-03 reading exports (for the consistency check) and the LLM-op
 export. Per front end and arm the output holds, on that episode, node F1 (both columns), false-retract rate and contamination
 AUC (area under the curve), the arm's mean, standard deviation and the episode's percentile over all validation episodes, and
-LLM-op's own values; for the episode itself, the percentiles of its frames, fragments per frame and VSMT-lean's in-memory
+LLM-op's own values; for the episode itself, the percentiles of its frames, fragments per frame and Rb-ERI's in-memory
 entities at the end. Example: a TAF node F1 at the 20th percentile of TAF's own validation distribution means the episode is
 harder than usual for TAF but not anomalous. Learned arms are averaged over the five seeds per episode before the
 distribution is taken. Files only: no audit, training, test read or LLM call. Descriptive, without significance tests (the

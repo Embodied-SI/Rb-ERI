@@ -9,7 +9,7 @@ statistics, manifest) and the S3-04 freeze receipt. Outputs, two files:
       ``front_statistics`` / ``test_statistics`` at the receipt's bootstrap seed, iteration count and ``test_runs``; they
       must equal the committed statistics value for value (except ``receipt_sha256`` and ``written_utc``); otherwise exit 3,
       writing only the differing fields and no reading;
-    - D2, report-only comparison of VSMT-lean against AssocOnly on every metric: the freeze receipt's statistics plan
+    - D2, report-only comparison of Rb-ERI against AssocOnly on every metric: the freeze receipt's statistics plan
       (``statistics.ablations.arms``) lists AssocOnly, but the S3-05 implementation (``lean_s3_05.COMPARED_ARMS``) did not
       compute it; the same frozen function is called with the plan's list of controls;
     - D3, two-sided 90% intervals of every report-only comparison (``lean_s3_05.two_level_interval``, same seed, same draws;
@@ -338,7 +338,7 @@ def committed_core(statistics_export: Mapping[str, Any]) -> dict[str, Any]:
 # --------------------------------------------------------------------------
 
 def d2_assoc_only(front: Mapping[str, Any]) -> tuple[dict[str, Any], list[str]]:
-    """VSMT-lean against AssocOnly on every metric, and the check that the two gate metrics equal the primary gate's blocks."""
+    """Rb-ERI against AssocOnly on every metric, and the check that the two gate metrics equal the primary gate's blocks."""
 
     blocks = {metric: front["comparisons"][metric][ASSOC_ONLY] for metric in s5.REPORT_METRICS}
     problems = []
@@ -462,7 +462,7 @@ def _quantiles(values: Sequence[float]) -> dict[str, float]:
 
 
 def d5_per_house(tables: Mapping[str, Any], front: Mapping[str, Any]) -> dict[str, Any]:
-    """The seed-paired advantage of VSMT-lean over AssocOnly in every house the gate kept, for both gate metrics."""
+    """The seed-paired advantage of Rb-ERI over AssocOnly in every house the gate kept, for both gate metrics."""
 
     out = {}
     for metric, direction in lt.MAIN_GATE:

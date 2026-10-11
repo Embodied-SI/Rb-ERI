@@ -6,7 +6,7 @@ Output: results/vsmt_lean_s3_01_planning_6c57903.json (commit 6c57903, planning 
 calibration of the two-level bound rests on it (Sec. IV-D and Limitations; docs/REPRODUCE.md, `appendix_power`).
 
 Reads only committed merged audits of the development and confirmation sets (instance-segmentation development,
-instance-segmentation confirmation, SAM2 development; VSMT-lean and AssocOnly at five seeds each, one run per rule arm) and
+instance-segmentation confirmation, SAM2 development; Rb-ERI and AssocOnly at five seeds each, one run per rule arm) and
 reports four things:
   * whether identity continuity poses the same events to every arm: per run, the first labelled re-observations after a
     move (arm-independent) and those among them with a pre-move carrier entity (the conditional denominator, arm-dependent);
@@ -174,7 +174,7 @@ def defined_houses(values: Mapping[tuple[str, int | None], Mapping[str, float | 
 
 def difference_matrix(values: Mapping[tuple[str, int | None], Mapping[str, float | None]], houses: Sequence[str],
                       direction: str) -> np.ndarray:
-    """d[h, s] = VSMT-lean minus AssocOnly at seed s, signed so that positive means VSMT-lean is better."""
+    """d[h, s] = Rb-ERI minus AssocOnly at seed s, signed so that positive means Rb-ERI is better."""
 
     sign = -1.0 if direction == "lower" else 1.0
     return np.array([[sign * (values[("VSMT-lean", s)][h] - values[("AssocOnly", s)][h]) for s in SEEDS] for h in houses], dtype=float)

@@ -1,4 +1,4 @@
-"""The trained VSMT-lean cost heads and the shared ReID heads, from Hugging Face layer T0.
+"""The trained Rb-ERI cost heads and the shared ReID heads, from Hugging Face layer T0.
 
 The cost heads and the SAM 2.1 ReID head come from the revision the paper cites; the instance-mask ReID head was added
 in a later revision (``results/vsmt_lean_hf_release_T0_addendum_1fc9efe.json``).  Every file is checked twice: the
@@ -88,7 +88,7 @@ def _frozen_digest(path_suffix: str) -> str:
 
 
 def selected_tau_r(front_end: str) -> float:
-    """The existence threshold S3-04 selected for VSMT-lean on this front end (validation only)."""
+    """The existence threshold S3-04 selected for Rb-ERI on this front end (validation only)."""
 
     receipt = _repo.load_json(FREEZE_RECEIPT)
     return float(receipt["fronts"][front_end]["selection"]["arms"][ARM]["config"]["tau_r"])
@@ -123,7 +123,7 @@ def _extract_member(archive: Path, suffix: str, target: Path) -> Path:
 
 def load_pretrained(front_end: str = "sam2", seed: int = 7, *, cache_dir: Path | None = None,
                     restored_root: Path | None = None, reid_head_path: Path | None = None) -> PretrainedWeights:
-    """The VSMT-lean weights of one front end and seed, downloaded once and digest-checked.
+    """The Rb-ERI weights of one front end and seed, downloaded once and digest-checked.
 
     ``restored_root`` reuses files already restored by ``ops/vsmt/hf_fetch.py --dest <root>`` or
     ``reproduce/fetch_extras.py --dest <root>`` (their server-layout paths under that root) instead of downloading.

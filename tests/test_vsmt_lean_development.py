@@ -8,7 +8,7 @@ prior after an unobserved gap, one intervention event per removed or moved objec
 observed objects' ticks, the gate's hits while an object is present and its false matches at the
 old place after it is gone) and the fit refuses degenerate sums; the development table takes the
 headline values per house, applies the ruling-X2 exclusion over the applicable arms only, reports
-the effective house count and the paired development difference of VSMT-lean against every arm,
+the effective house count and the paired development difference of Rb-ERI against every arm,
 and refuses a missing arm or house; the machine contract binds the implementation.
 """
 

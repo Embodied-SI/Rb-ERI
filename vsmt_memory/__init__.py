@@ -1,4 +1,4 @@
-"""VSMT-lean entity memory as a plug-in for an RGB-D stream (guide: docs/PLUGIN.md).
+"""Rb-ERI entity memory as a plug-in for an RGB-D stream (guide: docs/PLUGIN.md).
 
 Per frame the memory takes RGB, metric depth, intrinsics, a camera pose and instance masks, and returns the committed
 frame program (NOOP / BIND / BIRTH / RETRACT / REACTIVATE) and the entity table (identity, state, version).  The

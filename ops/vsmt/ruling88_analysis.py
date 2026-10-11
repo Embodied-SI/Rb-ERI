@@ -2,7 +2,7 @@
 """Ruling 88-2 reading: the step-0 package (decision ceiling, 2x2 attribution, the three probes) under the frozen rules.
 
 Inputs: the whole step-0 package -- merged node audits of the six deterministic decision-ceiling cells (teacher as policy),
-the two mixed cells of the 2x2 at five seeds each, the learned arm (ruling-86 VSMT-lean, five seeds), the per-house reports
+the two mixed cells of the 2x2 at five seeds each, the learned arm (ruling-86 Rb-ERI, five seeds), the per-house reports
 of the four rule arms of the development table (LOG-270), and the P1/P2/P3 probe outputs. Output: the reading under the
 rules frozen in advance by DECISIONS ruling 88-2.
   * G0-a, vocabulary value: O-V-node against O-A has a Missing residual rate lower by >= 0.05, and neither identity

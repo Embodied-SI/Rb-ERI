@@ -1,7 +1,7 @@
 """Re-run the frozen evaluation audits from the released data (level L1) and compare them with the paper's audits.
 
     python reproduce/l1_eval.py --data-root PATH --front sam2|instance --scope probe|test
-                                [--runs VSMT-lean:7,AssocOnly:7,...] [--episodes N] [--workers N]
+                                [--runs Rb-ERI:7,AssocOnly:7,...] [--episodes N] [--workers N]
                                 [--acknowledge-post-publication-reread]
 
 The audits run the frozen audit entry (``ops/vsmt/lean_s2_05_node_audit.py run --metrics-only``) in a temporary clean

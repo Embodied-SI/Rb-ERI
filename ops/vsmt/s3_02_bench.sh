@@ -21,7 +21,7 @@
 #   caches         (2) the two caches on the same $CACHE_EPISODES largest episodes ($INSTANCE_FRAMES / $SAM2_FRAMES frames): one after
 #                  the other, then both at once (the instance workers leave the SAM2 workers two cores each); total wall clocks,
 #                  each cache's throughput, resource peaks, and whether both ways write the same episode seals
-#   audit-profile  (3) one closed-loop audit (TAF, and VSMT-lean with the S2-06 seed-7 heads) of the median SAM2 development episode
+#   audit-profile  (3) one closed-loop audit (TAF, and Rb-ERI with the S2-06 seed-7 heads) of the median SAM2 development episode
 #                  under cProfile: time by function and by module
 #   train-device   (4) the S2-06 round-0 records: memory once loaded and once prepared as tensors, then one epoch on the CPU
 #                  ($TRAIN_THREADS threads) and one on the GPU, timed

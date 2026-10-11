@@ -7,7 +7,7 @@ mug entity is counted as such on every frame after the window, the oracle identi
 scores below the current rule, the merged report pools two audits, and a labelled record the
 evaluator would disagree with is refused.  Ruling 104-4 (1): the real ``run`` entry, its file reads patched to the same
 synthetic episode, writes a metrics-only audit equal to the full audit field by field (report, decomposition counts, seal
-chain digest, final memory) for TAF, ELU-P, VSMT-lean, NoVersion and AssocOnly; a metrics-only run refuses diagnostic
+chain digest, final memory) for TAF, ELU-P, Rb-ERI, NoVersion and AssocOnly; a metrics-only run refuses diagnostic
 options, and a merge keeps one mode.  Ruling 104-7: one job over several configurations writes, per configuration, the
 audit a separate run writes (rule arm and learned arm), keeps a finished audit on resume and refuses anything else.
 CPU only, seconds.

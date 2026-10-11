@@ -19,7 +19,7 @@ composes and that the contract binds:
   * ``development_table``: house-level headline values per arm and metric from the S2-04 episode
     reports, the ruling-X2 exclusion list per metric over the applicable arms (never-retracting arms
     are not applicable to the false retract rate), the mean per arm over the effective houses and the
-    paired development difference of VSMT-lean against every other arm (no bootstrap: that is S3),
+    paired development difference of Rb-ERI against every other arm (no bootstrap: that is S3),
     plus the size-and-cost readings;
   * ``validate_development_contract``: the machine contract.
 
@@ -63,8 +63,8 @@ PASSES = (
     "calibration",          # TAF at the rollout theta_a, no distance gate (ruling 75): the histograms and the ELU-P counts
     "elu_p_fit",            # TAF at the registered rollout theta_a with no gate: the ELU-P count records
     "dagger_round_0",       # ELU-P at the rollout_config: rollouts and labels for round-0 training (also ELU-P's table row)
-    "dagger_round_1",       # VSMT-lean and AssocOnly round-0 heads on their own rollouts: labels for round-1 training
-    "development_table",    # TAF, RAC, LOW at the development configurations; VSMT-lean, NoVersion, AssocOnly at the round-1 heads
+    "dagger_round_1",       # Rb-ERI and AssocOnly round-0 heads on their own rollouts: labels for round-1 training
+    "development_table",    # TAF, RAC, LOW at the development configurations; Rb-ERI, NoVersion, AssocOnly at the round-1 heads
 )
 #: Ruling 75 (1)(a) (2026-09-26): the calibration pass runs the gated development association -- TAF at the ELU-P
 #: rollout theta_a with no distance gate -- instead of LOW with no gate, whose nearest-entity-takes-all memory merged
@@ -116,7 +116,7 @@ NO_GATE_STRING = "no_gate"
 #: in the development-table pass (and the learned arms in DAgger round 1), in runner form; every one is
 #: a member of the S0-05 grid.  The three rule arms take no gate like the ELU-P rollout, so the table
 #: and the round-0 rollouts read side by side; LOW takes 1.0 m to differ from the no-gate calibration
-#: arm; NoVersion shares VSMT-lean's tau_r (a runner switch, not a configuration); AssocOnly has none.
+#: arm; NoVersion shares Rb-ERI's tau_r (a runner switch, not a configuration); AssocOnly has none.
 DEVELOPMENT_CONFIGURATIONS: dict[str, dict[str, Any]] = {
     "TAF": {"theta_a": 0.7, "d_a": None},
     "RAC": {"theta_a": 0.7, "d_a": None, "rho_rac": 0.7, "n_rac": 3},
@@ -139,7 +139,7 @@ def _require(condition: bool, code: str) -> None:
 def development_configuration(contract: Mapping[str, Any], arm: str) -> dict[str, Any] | None:
     """The registered development configuration of an arm in runner form, or None while a slot is still null.
 
-    A distance gate spelled "no_gate" becomes None and numbers are kept; NoVersion takes VSMT-lean's tau_r;
+    A distance gate spelled "no_gate" becomes None and numbers are kept; NoVersion takes Rb-ERI's tau_r;
     AssocOnly has no parameter.  The result must be a member of the frozen S0-05 grid (ruling 68 (3)).
     """
 
@@ -493,7 +493,7 @@ def development_table(reports: Mapping[str, Mapping[str, Mapping[str, Any]]], *,
     Input: every arm's S2-04 report per house.  Per metric, a house where the metric is undefined for any
     applicable arm is excluded for all arms (ruling X2; never-retracting arms are not applicable to the false
     retract rate and take no part in the exclusion); the table reports the effective house count, the per-arm
-    means and the mean paired difference of VSMT-lean against each arm (no bootstrap: that is S3).  A house set
+    means and the mean paired difference of Rb-ERI against each arm (no bootstrap: that is S3).  A house set
     that differs between arms is refused, not skipped.  Selects no winner.
     """
 

@@ -96,7 +96,7 @@ class StatisticsTests(unittest.TestCase):
             per_front[front] = s5.front_statistics(tables, runs, seed=20261002, iterations=300)
         out = s5.test_statistics(per_front)
         instance = per_front["instance"]
-        self.assertTrue(instance["primary_gate"]["metrics"]["identity_continuity"]["passed"])  # VSMT-lean higher everywhere
+        self.assertTrue(instance["primary_gate"]["metrics"]["identity_continuity"]["passed"])  # Rb-ERI higher everywhere
         self.assertFalse(instance["primary_gate"]["metrics"]["missing_residual_rate"]["passed"])  # ...and so higher residual
         self.assertFalse(out["fixed_sequence"]["instance_segmentation_established"])
         self.assertTrue(instance["comparisons"]["false_retract_rate"]["TAF"]["not_applicable"])

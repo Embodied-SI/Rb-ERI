@@ -10,7 +10,7 @@ functions and constants are shared by the training entry, the scheduler and the 
     ``holdout_split`` (the first 30 houses train, the rest select) would train S3 on 30 houses, so S3 does not use it;
   * per learned arm and round, the training settings (the ruling-99-1 recipe, 104-1 1c / 1d): the label source (teacher
     records or HeuristicLabel records), whether there is no existence head (AssocOnly), and whether the checkpoint is
-    chosen by grouped selection (round 1 of VSMT-lean and HeuristicLabel) or by the total held-out loss;
+    chosen by grouped selection (round 1 of Rb-ERI and HeuristicLabel) or by the total held-out loss;
   * the manifest guard (104-6): the fit pass and the round-0 / round-1 rollouts take only episodes of the S3 train
     manifest, the validation audits only episodes of the validation manifest; test is never handed out;
   * the selection readings (104-1 1f): over every validation audit of one front end (each arm and configuration, the
@@ -49,7 +49,7 @@ CHECKPOINT_SPLIT_RULE = (
 #: The records each label source writes next to an S2-04 episode receipt (ruling 104-1 1c: HeuristicLabel's own file).
 RECORD_FILES = {"teacher": "training_records.jsonl.gz", "heuristic": "heuristic_training_records.jsonl.gz"}
 
-#: The three trained arms (NoVersion uses VSMT-lean's heads, ruling 99-1 / 104-1 1d) and their label sources.
+#: The three trained arms (NoVersion uses Rb-ERI's heads, ruling 99-1 / 104-1 1d) and their label sources.
 TRAINED_ARMS = ("VSMT-lean", "AssocOnly", "HeuristicLabel")
 LABEL_SOURCE = {"VSMT-lean": "teacher", "AssocOnly": "teacher", "HeuristicLabel": "heuristic"}
 ROUNDS = (0, 1)

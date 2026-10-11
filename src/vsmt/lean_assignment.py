@@ -206,7 +206,7 @@ RECALL_LOCAL_RADIUS_M = 3.0
 #: D-224-S1 ruling 58 (2026-09-24): the fourth recall value, from the S1-04 birth neighbourhood counts.
 RECALL_BIRTH_NEIGHBOURHOOD_RADIUS_M = 1.0
 #: D-224-S1 ruling 68 (2026-09-25): the two remaining S0-03 slots.  The existence threshold here is a
-#: reference value only -- the runner takes tau_r from each configuration of the S0-05 VSMT-lean grid
+#: reference value only -- the runner takes tau_r from each configuration of the S0-05 Rb-ERI grid
 #: (0.15..0.9 since ruling 87-1); no decision reads this constant, only ``validate_assignment_contract``
 #: compares the contract's ``cost_matrix.existence_threshold_tau_r`` with it.  The reference-score seed
 #: fixes the deterministic stand-in the invariance test scores public inputs with.

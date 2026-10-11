@@ -11,7 +11,7 @@ and are not independent, so the statistical unit is the scene (ruling 111-1):
     is excluded for every arm and counted;
   * main table: each arm's mean over the scenes on that metric's list; learned arms also per seed and as mean +- standard
     deviation over the 5 seeds;
-  * comparisons: VSMT-lean against AssocOnly, every ablation and every rule arm, per metric, with the seed-paired matrix
+  * comparisons: Rb-ERI against AssocOnly, every ablation and every rule arm, per metric, with the seed-paired matrix
     of S3-05 (``lean_teacher.seed_paired_matrix``) and the same two-level resampling (``lean_s3_05.two_level_interval``,
     same bootstrap seed): difference, 90% interval and the 82-1 reading -- reported only, no gate, no "pass";
   * decomposition totals, size and cost, and missing runs (failed audits) are listed; the header states "3RScan
@@ -38,7 +38,7 @@ FRONTS = dict(s5.FRONTS)
 REPORT_METRICS = s5.REPORT_METRICS
 DIRECTION = dict(s5.DIRECTION)
 LEARNED_ARMS = s5.LEARNED_ARMS
-#: VSMT-lean against each of these, every metric, reported only; AssocOnly first (the primary comparison of the main gate)
+#: Rb-ERI against each of these, every metric, reported only; AssocOnly first (the primary comparison of the main gate)
 COMPARED_ARMS = ("AssocOnly", *s5.COMPARED_ARMS)
 INTERVAL = s5.NODE_F1_INTERVAL
 HEADER = "3RScan validation, n = effective scenes, proxy truth, frozen configurations, not in the main gate"
@@ -210,7 +210,7 @@ def _mean_sd(values: Sequence[float]) -> dict[str, Any]:
 
 def comparison(table: Mapping[str, Mapping[str, Any]], *, metric: str, control: str, kept: Sequence[str], seed: int,
                iterations: int) -> dict[str, Any]:
-    """VSMT-lean against one control on one metric: seed-paired difference, two-level 90% interval, 82-1 reading; no verdict."""
+    """Rb-ERI against one control on one metric: seed-paired difference, two-level 90% interval, 82-1 reading; no verdict."""
 
     seeded = control in LEARNED_ARMS
     control_keys = [lt.run_key(control, s) for s in lt.GATE_SEEDS] if seeded else [lt.run_key(control)]

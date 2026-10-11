@@ -6,7 +6,7 @@ verify). The paper's S3 training entry is ops/vsmt/s3_03_train.py, which takes t
 `lean_s3_03.training_settings`. This script produces no paper table row and reads no validation/test data.
 
 Inputs: one or more record sources ``<run root>:<pass>:<arm>`` (e.g. the round-0 ELU-P records and the arm's own round-1
-records), a registered seed and the arm (VSMT-lean or AssocOnly). Outputs: weights.json (total-loss selection),
+records), a registered seed and the arm (Rb-ERI or AssocOnly). Outputs: weights.json (total-loss selection),
 weights_grouped.json with --group-selection (ruling 96 (a)) and training_receipt.json. Recipe: the S0-05 values (AdamW,
 learning rate 1e-3, weight decay 1e-4, 20 epochs, checkpoints scored on held-out selection houses; the 39 development houses
 are split 30 train / 9 selection by the S1-02a split seed, `lean_reid_head.holdout_split`) plus the two ruling-89 changes:
@@ -18,7 +18,7 @@ concatenated in full without resampling; the budget is 20 epochs over the concat
 in the receipt.
 
 Usage:
-  python ops/vsmt/ruling89_train.py --source <root>:dagger_round_0:ELU-P [--source <root>:dagger_round_1:VSMT-lean] --arm VSMT-lean
+  python ops/vsmt/ruling89_train.py --source <root>:dagger_round_0:ELU-P [--source <root>:dagger_round_1:Rb-ERI] --arm Rb-ERI
       --seed 7 --out-dir <dir>
 """
 

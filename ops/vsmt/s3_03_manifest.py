@@ -180,7 +180,7 @@ def development_config(arm: str) -> dict[str, Any]:
 
 
 def round1_config(arm: str) -> dict[str, Any]:
-    """Ruling 104-1: round-1 rollouts at the registered development configuration (VSMT-lean's for HeuristicLabel; none for AssocOnly)."""
+    """Ruling 104-1: round-1 rollouts at the registered development configuration (Rb-ERI's for HeuristicLabel; none for AssocOnly)."""
 
     return {} if arm == "AssocOnly" else development_config("VSMT-lean")
 
@@ -190,7 +190,7 @@ def audit_configs(arm: str) -> list[dict[str, Any]]:
 
 
 def heads_arm(arm: str) -> str:
-    """Whose trained heads an audited learned arm uses: NoVersion runs VSMT-lean's (ruling 99-1 / 104-1 1d)."""
+    """Whose trained heads an audited learned arm uses: NoVersion runs Rb-ERI's (ruling 99-1 / 104-1 1d)."""
 
     return "VSMT-lean" if arm == "NoVersion" else arm
 
@@ -1110,8 +1110,8 @@ def cmd_readings(args: argparse.Namespace) -> int:
 
 
 def determinism_group(ctx: RunContext, front: str) -> tuple[str, int, dict[str, Any], int | None] | None:
-    """The audit group the determinism probe reruns: VSMT-lean at its development tau_r (first seed with a result), else TAF at its
-    development configuration -- every seed of VSMT-lean may have diverged (ruling 102-9: a result), the probe still runs."""
+    """The audit group the determinism probe reruns: Rb-ERI at its development tau_r (first seed with a result), else TAF at its
+    development configuration -- every seed of Rb-ERI may have diverged (ruling 102-9: a result), the probe still runs."""
 
     tau = round1_config("VSMT-lean")
     candidates: list[tuple[str, int, dict[str, Any], int | None]] = [
@@ -1154,7 +1154,7 @@ def cmd_probe_determinism(args: argparse.Namespace) -> int:
 
 
 def cmd_coverage(args: argparse.Namespace) -> int:
-    """Report only (ruling 104-2 readings): ruling 89-3 (1) state coverage in events on the training houses of VSMT-lean's records."""
+    """Report only (ruling 104-2 readings): ruling 89-3 (1) state coverage in events on the training houses of Rb-ERI's records."""
 
     import ruling89_probes as r89
 

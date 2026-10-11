@@ -153,7 +153,7 @@ METRIC_NOT_APPLICABLE_RULE: dict[str, str] = {
 #: D-224-S1 ruling 80-5 (b), 2026-09-28: existence labels the evaluator sets to present by rule for objects outside the truth
 #: node scope (the structural types of rulings 56 continued / 69, and objects spawned after the reload).  A RETRACT on such an
 #: entity counts as a false retract in false_retract_rate; the secondary column leaves these candidates out (LOG-273: 530 of
-#: VSMT-lean's 744 development false retracts were structural entities, which the node metric never scores).
+#: Rb-ERI's 744 development false retracts were structural entities, which the node metric never scores).
 PRESENT_BY_RULE_REASONS = ("structural_never_intervened", "spawned_after_reload")
 FALSE_RETRACT_IN_SCOPE_RULE = ("false_retract_rate over the existence candidates whose label reason is not one of "
                                "PRESENT_BY_RULE_REASONS (entities resolving to objects outside the truth node scope are left out)")
@@ -166,13 +166,13 @@ NUISANCE_FIELDS = ("path", "seed", "frame_index", "house_index")
 #: Every label kind the probe must be run against.
 NUISANCE_LABELS = ("association_status", "association_target_is_birth", "existence_status")
 
-#: Main-gate metrics and the direction in which VSMT-lean must win.
+#: Main-gate metrics and the direction in which Rb-ERI must win.
 MAIN_GATE = (
     ("missing_residual_rate", "lower"),
     ("identity_continuity", "higher"),
 )
 
-#: Ruling 102-2 / 102-3 (2026-10-02, 「待裁 102 修订稿二全按推荐」): the S3 main gate.  The primary comparison is VSMT-lean
+#: Ruling 102-2 / 102-3 (2026-10-02, 「待裁 102 修订稿二全按推荐」): the S3 main gate.  The primary comparison is Rb-ERI
 #: against the same-recipe AssocOnly (ruling 99-2); each gate metric is tested on one exclusion list over every run of the
 #: main table, by two-level resampling of houses and seeds plus the 82-1 seed-stability condition; the two front ends are
 #: tested in a fixed sequence.  The original gate (against the strongest control) is computed the same way and reported.
@@ -1881,7 +1881,7 @@ def primary_gate(
     per_house_by_metric: Mapping[str, Mapping[str, Mapping[str, Any]]], *, seed: int, seeds: Sequence[int] = GATE_SEEDS,
     rule_arms: Sequence[str] = CONTROL_ARMS, iterations: int = BOOTSTRAP_ITERATIONS,
 ) -> dict[str, Any]:
-    """Ruling 99-2 / 102-3: VSMT-lean against AssocOnly on both main-gate metrics of one front end, each on its own one list."""
+    """Ruling 99-2 / 102-3: Rb-ERI against AssocOnly on both main-gate metrics of one front end, each on its own one list."""
 
     runs = main_table_runs(seeds=seeds, rule_arms=rule_arms)
     out: dict[str, Any] = {"rule": MAIN_GATE_RULE, "metrics": {}}
@@ -1952,7 +1952,7 @@ def ablation_report(
     iterations: int = BOOTSTRAP_ITERATIONS, ablations: Sequence[str] = ABLATION_ARMS,
     excluded_houses: Sequence[str] = (), not_applicable: Sequence[str] = (),
 ) -> dict[str, Any]:
-    """VSMT-lean against each ablation with the same paired bootstrap; reported, never gated.
+    """Rb-ERI against each ablation with the same paired bootstrap; reported, never gated.
 
     An ablation for which the metric is not applicable by construction gets a
     ``not_applicable`` row instead of a bootstrap.  Only the tests call this

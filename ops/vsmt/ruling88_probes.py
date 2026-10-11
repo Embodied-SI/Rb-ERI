@@ -3,7 +3,7 @@
 
 Step 0 of ruling 88: three cheap checks that read only sealed training records (public features plus teacher labels); no
 simulator, no rule changed.
-  * coverage (P1, state coverage): in the round-0 (ELU-P) and round-1 (VSMT-lean) records, the number of association rows by
+  * coverage (P1, state coverage): in the round-0 (ELU-P) and round-1 (Rb-ERI) records, the number of association rows by
     candidate state (active / dormant / retracted), of labelled targets by the target entity's state and of existence rows
     by label and state. Example: if round 1 has only a few dozen labelled targets in the retracted state, the main-table heads have
     not learned to recover from it.
@@ -25,7 +25,7 @@ Reused outside S2-R through ruling89_probes.py: `_entry`, `read_records` and `st
 behind ruling89_train.py, the S2-06 training entry, and the S3-03 coverage reading); `_entry` also by s3_02_bench.py.
 
 Usage:
-  python ops/vsmt/ruling88_probes.py coverage --output-root <pass root> --pass dagger_round_0:ELU-P --pass dagger_round_1:VSMT-lean --output <json>
+  python ops/vsmt/ruling88_probes.py coverage --output-root <pass root> --pass dagger_round_0:ELU-P --pass dagger_round_1:Rb-ERI --output <json>
   python ops/vsmt/ruling88_probes.py sensitivity --output-root <pass root> --weights <weights.json> --label A7 --output <json>
   python ops/vsmt/ruling88_probes.py imitation --output-root <pass root> --target rac --output-dir <dir> [--epochs 20]
 """

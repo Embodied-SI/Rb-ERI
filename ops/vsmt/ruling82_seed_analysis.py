@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Ruling 82-1 reading: the spread of five training seeds and the seed-paired VSMT-lean vs AssocOnly gaps (read-only).
+"""Ruling 82-1 reading: the spread of five training seeds and the seed-paired Rb-ERI vs AssocOnly gaps (read-only).
 
 Ruling 81 found that, under one training recipe, changing only the initialisation and seed flips the node-F1 order of
-VSMT-lean and AssocOnly. This script reads merged node audits (schema v5 when written) of both arms at the five registered
+Rb-ERI and AssocOnly. This script reads merged node audits (schema v5 when written) of both arms at the five registered
 seeds (7, 19, 31, 43, 59; the registered recipe at the time: own-arm records only, 20 epochs) and reports per metric: each
-seed's house mean, the mean and standard deviation over the five seeds; per seed, the house-paired mean difference VSMT-lean
+seed's house mean, the mean and standard deviation over the five seeds; per seed, the house-paired mean difference Rb-ERI
 minus AssocOnly, and the mean, standard deviation and same-sign count of these five gaps. Pre-registered rule of ruling 82:
 the order is established at the development level only if at least 4 gaps share a sign and |mean gap| exceeds the standard
 deviation of the 5 gaps; otherwise "not distinguishable on the development set". A house-resampling interval of the
@@ -17,7 +17,7 @@ Reused outside S2-R: `analyse` and `METRICS` by s2_06_reading.py (S2-06 ruling 1
 in `lean_teacher`.
 
 Usage:
-  python ops/vsmt/ruling82_seed_analysis.py --group VSMT-lean:7:<merged audit json> ... --group AssocOnly:59:<...> \
+  python ops/vsmt/ruling82_seed_analysis.py --group Rb-ERI:7:<merged audit json> ... --group AssocOnly:59:<...> \
     [--reference-table results/vsmt_lean_s2_05_development_table_oracle_8ce7b0b.json] --output <json>
 """
 
@@ -67,7 +67,7 @@ def spread(values: list[float]) -> dict[str, Any]:
 
 
 def verdict(gaps: list[float], direction: str, arms: tuple[str, str] = ARMS) -> dict[str, Any]:
-    """The pre-registered 82-1 rule on the seed-paired gaps (first arm minus second; VSMT-lean minus AssocOnly by default)."""
+    """The pre-registered 82-1 rule on the seed-paired gaps (first arm minus second; Rb-ERI minus AssocOnly by default)."""
 
     positive, negative = sum(g > 0 for g in gaps), sum(g < 0 for g in gaps)
     mean = statistics.fmean(gaps)
@@ -94,9 +94,9 @@ def bootstrap_interval(differences: list[float]) -> list[float] | None:
 
 def analyse(groups: Mapping[tuple[str, int], Mapping[str, Any]], reference: Mapping[str, Any] | None = None, *,
             arms: tuple[str, str] = ARMS) -> dict[str, Any]:
-    """The 82-1 reading of two arms at the five seeds: ``arms[0]`` minus ``arms[1]`` (VSMT-lean against AssocOnly by default).
+    """The 82-1 reading of two arms at the five seeds: ``arms[0]`` minus ``arms[1]`` (Rb-ERI against AssocOnly by default).
 
-    S2-06 (ruling 100-3) reads VSMT-lean against NoVersion the same way, without a gate; the default output is unchanged.
+    S2-06 (ruling 100-3) reads Rb-ERI against NoVersion the same way, without a gate; the default output is unchanged.
     """
 
     first, second = arms

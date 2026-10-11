@@ -4,12 +4,12 @@
 S2-06 asks whether the pattern S2-R showed on the instance-segmentation front end -- against the same-recipe AssocOnly a much
 lower Missing residual rate, higher identity continuity and slightly lower node F1; against the rule arms a trade-off over
 several metrics -- persists on the SAM2 front end once every trainable and fittable part is redone on SAM2 by the frozen
-rules. Inputs: merged node audits of the seven S2-06 arms on SAM2 (VSMT-lean, NoVersion and AssocOnly at five seeds each;
-TAF, ELU-P, RAC and LOW once each) and the same set on the instance-segmentation development set (VSMT-lean grouped heads
+rules. Inputs: merged node audits of the seven S2-06 arms on SAM2 (Rb-ERI, NoVersion and AssocOnly at five seeds each;
+TAF, ELU-P, RAC and LOW once each) and the same set on the instance-segmentation development set (Rb-ERI grouped heads
 7c76970, AssocOnly and rule arms d835cd3, NoVersion added in this stage). Output, by the reading fixed in ruling 100-3:
-  * VSMT-lean against AssocOnly: per-metric 82-1 orders and the 95-3 classification (`ruling95_reading.read` reused as is),
+  * Rb-ERI against AssocOnly: per-metric 82-1 orders and the 95-3 classification (`ruling95_reading.read` reused as is),
     one per front end;
-  * VSMT-lean against NoVersion: per-metric 82-1 orders, reported without a gate (the effect of keeping versions), one per
+  * Rb-ERI against NoVersion: per-metric 82-1 orders, reported without a gate (the effect of keeping versions), one per
     front end;
   * rule arms: house means and the 85-4 ratio (against the rule arm with the lowest Missing residual rate);
   * side by side: each arm's five-seed mean and order per metric, one column for SAM2 and one for instance segmentation.
@@ -21,9 +21,9 @@ parameter and changes no method; 30 of the 39 development houses are training ho
 
 Usage:
   python ops/vsmt/s2_06_reading.py \
-      --sam2-group VSMT-lean:7:<merged audit> ... --sam2-group NoVersion:59:<...> --sam2-group AssocOnly:59:<...> \
+      --sam2-group Rb-ERI:7:<merged audit> ... --sam2-group NoVersion:59:<...> --sam2-group AssocOnly:59:<...> \
       --sam2-rule-arm TAF:<merged audit> ... \
-      --instance-group VSMT-lean:7:results/vsmt_lean_ruling96_audit_GROUPED-A7_7c76970.json ... \
+      --instance-group Rb-ERI:7:results/vsmt_lean_ruling96_audit_GROUPED-A7_7c76970.json ... \
       --instance-group NoVersion:7:<merged audit> ... --instance-group AssocOnly:7:results/vsmt_lean_ruling95_audit_ASSOC-A7_d835cd3.json ... \
       --instance-rule-arm TAF:results/vsmt_lean_ruling95_audit_RULE-TAF_d835cd3.json ... \
       --instance-reading results/vsmt_lean_ruling96_reading_7c76970.json --output <json>

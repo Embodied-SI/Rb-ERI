@@ -27,7 +27,7 @@ s3_02_bench.py; tests/test_vsmt_lean_s3_03_train.py binds `revision_kwargs` to `
 Usage:
   python ops/vsmt/ruling89_probes.py same-input --source <pass root>:dagger_round_0:ELU-P --output <json>
   python ops/vsmt/ruling89_probes.py imitation --source <pass root>:dagger_round_0:ELU-P --target rac --output-dir <dir>
-  python ops/vsmt/ruling89_probes.py coverage-events --source <root>:dagger_round_0:ELU-P --source <root>:dagger_round_1:VSMT-lean --output <json>
+  python ops/vsmt/ruling89_probes.py coverage-events --source <root>:dagger_round_0:ELU-P --source <root>:dagger_round_1:Rb-ERI --output <json>
 """
 
 from __future__ import annotations

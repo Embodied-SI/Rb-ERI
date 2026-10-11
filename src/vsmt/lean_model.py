@@ -1,4 +1,4 @@
-"""D-224 / S2-03: VSMT-lean's learned cost heads -- the only trained part of the method.
+"""D-224 / S2-03: Rb-ERI's learned cost heads -- the only trained part of the method.
 
 Three heads score the S0-03 sealed feature rows: the association head a(f, e) over the 14 frozen
 association features, the existence head r(e) over the 17 existence features (12 before ruling 89-2
@@ -18,7 +18,7 @@ between them.
     learning-rate schedule 1e-3 -> 1e-5 over the 20 epochs and gradient-norm clipping at 1.0 (ruling
     91), existence decisions on sigmoid(logit - ln w) (ruling 91; stored as ``existence_logit_offset``),
     and, in DAgger round 1 of the arms with an existence head, grouped checkpoint selection (ruling 96
-    (a)).  54,787 parameters for VSMT-lean's three heads, 35,842 for AssocOnly's two.
+    (a)).  54,787 parameters for Rb-ERI's three heads, 35,842 for AssocOnly's two.
   * The recipe registered in S0-05 before ruling 89 (every switch off, the defaults; kept for the runs
     before ruling 89): a row LayerNorm as input layer, an unweighted existence term, a constant
     learning rate and checkpoint selection by the single total loss (54,207 parameters with the
@@ -120,7 +120,7 @@ LOSS_RULE = ("per-fragment softmax cross-entropy over [recalled columns..., BIRT
 EARLY_STOPPING_RULE = "every registered epoch runs; the weights of the epoch with the lowest validation loss are kept (ties to the earlier epoch); no patience value"
 BATCH_RULE = "per_frame"
 #: D-224-S1 ruling 79-5 (a), 2026-09-28: each head draws its initial weights from its own seed derived from (seed, head
-#: name), so the association and birth heads start bit-identical in VSMT-lean and in AssocOnly (which builds no existence
+#: name), so the association and birth heads start bit-identical in Rb-ERI and in AssocOnly (which builds no existence
 #: head).  Before, one shared stream ran association -> existence -> birth, and AssocOnly's birth head drew other numbers.
 INITIALISATION_RULE = "per-head torch.manual_seed(int.from_bytes(sha256(f'{seed}|{head}')[:8], 'big') % 2**63) before building each head"
 OPTIMIZER = "AdamW"
@@ -269,7 +269,7 @@ def make_heads(*, assoc_only: bool, seed: int, encoding: Mapping[str, Any] | Non
     """The three (or, for AssocOnly, two) heads with a seeded initialisation.
 
     Each head is seeded from (seed, head name) (ruling 79-5 (a)), so at one seed the association and birth heads of
-    AssocOnly and VSMT-lean start bit-identical and the causal comparison carries no initialisation difference.  With
+    AssocOnly and Rb-ERI start bit-identical and the causal comparison carries no initialisation difference.  With
     ``encoding`` (ruling 89-2 / 89-3) the input layer is the field-wise encoding with those statistics, otherwise a row
     LayerNorm.
     """
@@ -724,7 +724,7 @@ def train_heads(
     89; on today's feature rows its existence head is 17 wide, so it reproduces the procedure, not the 12-feature heads
     of those runs (``load_heads`` still loads them).  The paper's recipe (ruling 99-1) is what
     ``lean_s3_03.training_settings`` passes: every switch below on, except ``group_selection`` outside round 1 of
-    VSMT-lean and HeuristicLabel and ``existence_class_weight`` for AssocOnly:
+    Rb-ERI and HeuristicLabel and ``existence_class_weight`` for AssocOnly:
       * ``field_encoding`` (ruling 89-2 / 89-3): heads with the field-wise encoding whose statistics come from
         ``train_records`` only;
       * ``existence_class_weight`` (ruling 89-2 (a)): gone rows weighted by present / gone rows of ``train_records``

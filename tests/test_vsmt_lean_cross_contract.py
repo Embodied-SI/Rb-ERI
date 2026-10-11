@@ -366,7 +366,7 @@ FROZEN_RULE_SHA256 = {
     # moved object re-observed with a labelled fragment after the window; no pre-move carrier counts as not kept; reported field
     # events), the denominator string and two claims bound; the earlier conditional definition becomes the diagnostic column
     # identity_continuity_conditional (names, reported fields, its block with role).  818ec131 -> 0e856be3.
-    # Ruling 102-2 / 102-3 (2026-10-02): the statistics block states the S3 gate -- VSMT-lean against the same-recipe AssocOnly
+    # Ruling 102-2 / 102-3 (2026-10-02): the statistics block states the S3 gate -- Rb-ERI against the same-recipe AssocOnly
     # (primary_comparison, seeds, all five required), one exclusion list per metric over every main-table run, two-level house x
     # seed resampling (shared house draws), the favourable 82-1 condition, the target (the training procedure under fixed data,
     # recipe and selection), the original gate reported only, and the fixed sequence over the two front ends as the multiple-
@@ -378,7 +378,7 @@ FROZEN_RULE_SHA256 = {
     # configurations per method, a no-gate member in every rule arm), the ELU-P rollout_config
     # (0.7, 1.0, 0.0) and the should_be_visible_min_ratio_superseded record enter the digest; the
     # weight_decay, seeds and should-be-visible values are slots and do not.  c5354b1e -> 4e285050.
-    # Re-pinned 2026-09-29 for ruling 87-1 (LOG-283/284): the four tau_r grids (VSMT-lean, NoVersion, HeuristicLabel,
+    # Re-pinned 2026-09-29 for ruling 87-1 (LOG-283/284): the four tau_r grids (Rb-ERI, NoVersion, HeuristicLabel,
     # VSMT-lean-ctx) extended down by 0.15, 0.2 and 0.25, ten values each.  4e285050 -> c9a44bd3.
     # Re-pinned 2026-10-01 for ruling 99-1 (LOG-297): arms.VSMT-lean.training.s2r_recipe records the recipe S2-R froze and
     # evaluated on the development and confirmation sets (17 existence fields, field-wise encoding, class-weighted existence

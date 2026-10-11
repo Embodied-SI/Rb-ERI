@@ -61,7 +61,7 @@ def report(base: float, *, retract: bool, events: int, judged_retracts: int = 2,
 
 
 def synthetic_front(gain: float, rng: random.Random) -> tuple[list[dict], dict]:
-    """The receipt's test runs and the merged export of one front end (a VSMT-lean gain on every metric), with three undefined
+    """The receipt's test runs and the merged export of one front end (a Rb-ERI gain on every metric), with three undefined
     cells: house 0 has no identity event (excluded for all), NoVersion seed 19 judged no retract in house 1 (an extra exclusion
     for that comparison only), LOW recovered nothing in house 2 (excluded for recovery latency, two unrecovered objects there)."""
 

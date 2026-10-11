@@ -135,7 +135,7 @@ def association_side(coverage: Mapping[str, Any] | None, imitation: Mapping[str,
 
 
 def joint_check(runs: Mapping[int, Mapping[str, Any]]) -> dict[str, Any]:
-    """89-4: VSMT-lean with both sides' heads, tau_r 0.5, the new recall, five seeds x 39 episodes; the four frozen lines."""
+    """89-4: Rb-ERI with both sides' heads, tau_r 0.5, the new recall, five seeds x 39 episodes; the four frozen lines."""
 
     out: dict[str, Any] = {"seeds": sorted(runs), "lines": {}}
     ok = len(runs) == len(SEEDS)

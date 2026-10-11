@@ -2,15 +2,15 @@
 
 Ruling 107-4 fixes what is computed after the test run and how. This module arranges the merged test audits (one per
 front end and run) as house x run tables and then calls only frozen functions:
-  * primary gate: ``lean_teacher.primary_gate`` (VSMT-lean against AssocOnly, one exclusion list per main-gate metric,
+  * primary gate: ``lean_teacher.primary_gate`` (Rb-ERI against AssocOnly, one exclusion list per main-gate metric,
     two-level resampling plus 82-1) once per front end, then ``fixed_sequence`` over three steps (instance
     segmentation, both metrics -> SAM 2.1 Missing residual rate -> SAM 2.1 identity continuity);
   * original gate: ``original_gate`` (against the strongest rule arm per metric on test), reported only;
-  * report-only comparisons: VSMT-lean against every ablation and rule arm on every metric, with the same one exclusion
+  * report-only comparisons: Rb-ERI against every ablation and rule arm on every metric, with the same one exclusion
     list, two-level resampling and 82-1 as the gate (``gate_metric``; ruling 102-2: the original gate and the ablations
     use the same lists and resampling and are reported only); learned arms are paired by seed, rule arms and HandCost
     are seedless;
-  * node F1: the VSMT-lean minus AssocOnly difference and its 90% interval (5th/95th percentiles of the two-level
+  * node F1: the Rb-ERI minus AssocOnly difference and its 90% interval (5th/95th percentiles of the two-level
     resampling, the same draws and bootstrap seed as the gate);
   * main table: each arm's mean per metric over the houses the metric's list keeps, with per-seed values and the mean
     +- standard deviation over the 5 seeds for learned arms (ruling 85-2 (1)); decomposition totals, size and cost,
@@ -39,7 +39,7 @@ FRONTS = {"instance": "simulator_instance_masks", "sam2": "sam2"}
 REPORT_METRICS = tuple(ev.HEADLINE_FIELD)
 DIRECTION = dict(dev.BETTER)
 LEARNED_ARMS = ("VSMT-lean", "NoVersion", "HeuristicLabel", "AssocOnly")
-#: VSMT-lean against each of these, every metric, report only (AssocOnly is the primary comparison)
+#: Rb-ERI against each of these, every metric, report only (AssocOnly is the primary comparison)
 COMPARED_ARMS = ("NoVersion", "HeuristicLabel", "HandCost", "TAF", "ELU-P", "RAC", "LOW")
 NODE_F1_INTERVAL = (0.05, 0.95)
 STATISTICS_RULE = (
@@ -178,7 +178,7 @@ def front_statistics(per_metric: Mapping[str, Mapping[str, Mapping[str, Any]]], 
         interval = two_level_interval(matrix, seed=seed, iterations=iterations)
         node_f1 = {"difference": sum(map(sum, matrix)) / (len(matrix) * len(matrix[0])), "interval_90": interval,
                    "houses": len(node_kept), "role": "reported only, no non-inferiority margin (ruling 102-3)"}
-    except (lt.LeanTeacherError, LeanS3_05Error) as exc:  # e.g. a VSMT-lean or AssocOnly seed without a run: not evaluable
+    except (lt.LeanTeacherError, LeanS3_05Error) as exc:  # e.g. a Rb-ERI or AssocOnly seed without a run: not evaluable
         node_f1 = {"evaluable": False, "reason": str(exc)}
     decomposition: dict[str, dict[str, int]] = {}
     size: dict[str, dict[str, Any]] = {}

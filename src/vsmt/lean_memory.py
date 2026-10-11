@@ -1,4 +1,4 @@
-"""D-224 / S0-01: the VSMT-lean entity memory core.
+"""D-224 / S0-01: the Rb-ERI entity memory core.
 
 This module is the only place where entity records are created, versioned,
 closed or reopened.  It is deliberately self-contained: the archived

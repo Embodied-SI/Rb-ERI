@@ -15,7 +15,7 @@ weights that run on test day. This module holds the testable parts, called by th
   * code digest (106-4): the sha256 of every Git-tracked file under src/, ops/ and configs/ and one digest over them;
     the S3-05 entry recomputes it item by item with ``verify_freeze``.
 Inputs are readings, manifests and file contents; outputs are the selection, difference lists and receipt blocks.
-Example: if every one of VSMT-lean's ten tau_r values on the instance-segmentation front end has a validation Missing
+Example: if every one of Rb-ERI's ten tau_r values on the instance-segmentation front end has a validation Missing
 residual rate above AssocOnly's, the node-F1 maximum is chosen, constraint_not_satisfiable is recorded, and the receipt
 states that the arm's result cannot support "retraction reduces stale entities".
 It does not read test, train, compute the primary gate or compare arms.
@@ -204,7 +204,7 @@ def probe_episodes(reports: Mapping[str, Mapping[str, Any]], frames: Mapping[str
 
 
 def heads_arm(arm: str) -> str:
-    """Whose trained heads a learned arm runs: NoVersion runs VSMT-lean's (rulings 99-1, 104-1 1d)."""
+    """Whose trained heads a learned arm runs: NoVersion runs Rb-ERI's (rulings 99-1, 104-1 1d)."""
 
     return "VSMT-lean" if arm == "NoVersion" else arm
 

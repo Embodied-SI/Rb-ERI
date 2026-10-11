@@ -2,14 +2,14 @@
 """S3-03 training (ruling 104): one learned arm, one DAgger round, one registered seed, on streamed records.
 
 This is the paper's S3 training entry; the recipe comes from ``lean_s3_03.training_settings``. S3-03 trains three learned arms
-(VSMT-lean, AssocOnly, HeuristicLabel), each once in round 0 (seed 7) and at five seeds in round 1; NoVersion uses
-VSMT-lean's heads. This entry runs one of these trainings:
+(Rb-ERI, AssocOnly, HeuristicLabel), each once in round 0 (seed 7) and at five seeds in round 1; NoVersion uses
+Rb-ERI's heads. This entry runs one of these trainings:
   * inputs: one or more record sources (``<pass root>:<arm>:<label source>``, e.g. the teacher records of the round-0 ELU-P
     pass and the arm's own round-1 records), the arm, the round and a registered seed; training and checkpoint-selection
     houses come from the S3 train manifest by ruling 104-1 1a (``lean_s3_03.checkpoint_split``: the first 240 train, the last
     60 select; the "validation" loss of the receipt is the loss on these 60 held-out train houses, not the validation split);
   * recipe: the version frozen by ruling 99-1 (field-wise encoding, class-weighted existence loss, cosine learning rate
-    1e-3 -> 1e-5, gradient clipping 1.0, existence decisions on the logit minus ln w; round 1 of VSMT-lean and HeuristicLabel
+    1e-3 -> 1e-5, gradient clipping 1.0, existence decisions on the logit minus ln w; round 1 of Rb-ERI and HeuristicLabel
     also keeps the grouped-selection weights), the same model code as the development entry ``ruling89_train.py
     --revision-91 [--group-selection]``;
   * memory: records are streamed twice (first only the columns the encoding statistics need, then one record at a time to
@@ -21,18 +21,18 @@ VSMT-lean's heads. This entry runs one of these trainings:
     ``--checkpoint`` the whole training state at each epoch end in ``checkpoint/state.pt``, so that rerunning the same
     command after an interruption continues at the next epoch (bit-identical to an uninterrupted training; a checkpoint whose
     input digests differ is refused).
-Example: round 1, VSMT-lean, seed 31 reads the round-0 ELU-P records and the records of VSMT-lean's round-0 heads, trains 20 epochs and
+Example: round 1, Rb-ERI, seed 31 reads the round-0 ELU-P records and the records of Rb-ERI's round-0 heads, trains 20 epochs and
 keeps the grouped-selection heads. It selects no configuration, reads no validation or test record (every source episode must
 be in the S3 train manifest) and does not change the recipe.
 
 Usage:
-  python ops/vsmt/s3_03_train.py train --source <pass root>:<arm>:<teacher|heuristic> [--source ...] --arm VSMT-lean --round 1
+  python ops/vsmt/s3_03_train.py train --source <pass root>:<arm>:<teacher|heuristic> [--source ...] --arm Rb-ERI --round 1
       --seed 31 --out-dir <dir> [--threads 4] [--best-so-far] [--checkpoint]
-  python ops/vsmt/s3_03_train.py probe --source ... --arm VSMT-lean --round 0 --seed 7 --houses 12 [--epochs 1] --out <probe.json>
+  python ops/vsmt/s3_03_train.py probe --source ... --arm Rb-ERI --round 0 --seed 7 --houses 12 [--epochs 1] --out <probe.json>
       (ruling 104-2's training equivalence probe: the list-based ``train_heads`` and the streamed path on the same records)
-  python ops/vsmt/s3_03_train.py time --source ... --arm VSMT-lean --round 0 --houses 20 --threads 1,2,3,4 --out <timing.json>
+  python ops/vsmt/s3_03_train.py time --source ... --arm Rb-ERI --round 0 --houses 20 --threads 1,2,3,4 --out <timing.json>
       (ruling 104-3: the per-epoch time of one training at each thread count, for the TRAIN_THREADS rule)
-  python ops/vsmt/s3_03_train.py probe-resume --source ... --arm VSMT-lean --round 1 --seed 7 --houses 12 --epochs 3 --stop-after 1
+  python ops/vsmt/s3_03_train.py probe-resume --source ... --arm Rb-ERI --round 1 --seed 7 --houses 12 --epochs 3 --stop-after 1
       --out <probe.json> (a training stopped after an epoch and continued from its checkpoint against one trained straight through)
 
 Exit codes: 0 trained; 3 diverged (the receipt is written: a result, ruling 102-9) or the probe differs; 2 refused.

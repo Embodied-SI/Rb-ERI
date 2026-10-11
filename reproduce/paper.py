@@ -14,7 +14,7 @@ checkout's files are not modified:
    committed exports, and the outputs are compared byte for byte with the committed files;
 4. optionally (``--build-pdf``, needs TeX) ``paper/tools/build.sh`` builds both PDF versions.
 
-It prints the rows of Table II (Missing residual rate and identity continuity of AssocOnly and VSMT-lean, the one-sided
+It prints the rows of Table II (Missing residual rate and identity continuity of AssocOnly and Rb-ERI, the one-sided
 95% lower bound and the fixed-order step) and writes a report to ``outputs/reproduce/`` that lists every compared field and
 file with its SHA-256.  Exit codes: 0 everything
 reproduced; 3 a difference (listed); 2 a precondition is missing; 1 an unexpected error.

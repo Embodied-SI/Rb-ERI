@@ -22,10 +22,10 @@
 #   elu-p-fit          ruling 75 / 100-1 (ii): fit-elu-p over the calibration pass; until the SAM2 values are registered in S0-05
 #                      (a commit, pre-authorised by ruling 68 (10)) the stage HOLDS; at the registering commit it checks equality
 #   round0             ELU-P at the rollout configuration and the SAM2 fitted values: round-0 records, 39 episodes
-#   train0             VSMT-lean and AssocOnly, seed 7, the frozen recipe (ruling89_train.py --revision-91), total-loss selection
-#   round1             each learned arm's own round-1 records from its round-0 head (VSMT-lean at tau_r 0.5)
-#   train1             both arms at the five seeds on round 0 + own round 1; VSMT-lean also keeps the grouped selection
-#   audits             19 groups x 39 SAM2 episodes: VSMT-lean, NoVersion (grouped heads) and AssocOnly at five seeds; TAF, RAC,
+#   train0             Rb-ERI and AssocOnly, seed 7, the frozen recipe (ruling89_train.py --revision-91), total-loss selection
+#   round1             each learned arm's own round-1 records from its round-0 head (Rb-ERI at tau_r 0.5)
+#   train1             both arms at the five seeds on round 0 + own round 1; Rb-ERI also keeps the grouped selection
+#   audits             19 groups x 39 SAM2 episodes: Rb-ERI, NoVersion (grouped heads) and AssocOnly at five seeds; TAF, RAC,
 #                      LOW at their development configurations, ELU-P at its round-0 configuration with the SAM2 fitted values
 #   instance-noversion a reproduction probe (current code reproduces a 7c76970 instance audit), then NoVersion with the 7c76970
 #                      grouped heads on the 39 instance-segmentation episodes (5 x 39)

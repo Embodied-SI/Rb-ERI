@@ -32,7 +32,7 @@ Three constraints from D-224-R shape the rule arms:
    recall no longer excludes distant candidates, so the gate is the only
    thing that stops a control from re-associating a moved object; a grid
    with only tight gates would hand the identity-continuity half of the
-   main gate to VSMT-lean by construction.
+   main gate to Rb-ERI by construction.
 3. An ineligible pair is expressed with one registered sentinel logit.  The
    S0-03 cost matrix needs a logit for every recalled pair, and its derived
    forbidden cost stays above the sentinel automatically.
@@ -71,7 +71,7 @@ LEARNED_ARMS = (METHOD_ARM, "NoVersion", "HeuristicLabel", "AssocOnly", OPTIONAL
 #: Arms whose logits come from a hand-written rule; none of them has a gradient.
 RULE_ARMS = (*CONTROL_ARMS, "HandCost")
 #: Rule arms that use the ConceptGraphs-style cosine gate.  HandCost does
-#: not: D-224-SW ruling S made it a stateless hand score in VSMT-lean's own
+#: not: D-224-SW ruling S made it a stateless hand score in Rb-ERI's own
 #: three head slots, so it has no distance gate and no temporal state.
 GATE_ARMS = ("TAF", "ELU-P", "RAC")
 
@@ -191,7 +191,7 @@ ELU_P_FITTED_BY_MASK_SOURCE_RULE = (
     "are registered in place; a pass runs ELU-P at the set of its episodes' mask source and refuses while that set is null")
 
 #: D-224-X ruling X4: one pre-registered ELU-P configuration produces the
-#: memory rollouts for VSMT-lean's DAgger round 0 and the public decisions
+#: memory rollouts for Rb-ERI's DAgger round 0 and the public decisions
 #: HeuristicLabel trains on, in S2-05 and S3-03 alike.  It is a member of
 #: the ELU-P grid with no distance gate, and it is fixed before any run, so
 #: the learned arms' training data never depends on validation selection.
@@ -209,7 +209,7 @@ ROLLOUT_CONFIG_GATE_PARAMETER = "d_a"
 #: rule arm with a no-gate member; the contract must carry exactly these values.
 #: D-224-S1 ruling 87-1 (2026-09-29, LOG-283/284): every tau_r grid extended down by 0.15, 0.2 and 0.25 (ten values,
 #: within the twelve-configuration budget) because the trained existence heads score almost every candidate below
-#: 0.3; the four tau_r grids stay identical so the ablations share VSMT-lean's configuration space.
+#: 0.3; the four tau_r grids stay identical so the ablations share Rb-ERI's configuration space.
 FROZEN_GRIDS: dict[str, dict[str, list[Any]]] = {
     METHOD_ARM: {"tau_r": [0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]},
     "TAF": {"theta_a": [0.6, 0.7, 0.8], "d_a": [None, 0.5, 1.0, 2.0]},
@@ -235,7 +235,7 @@ SPLIT_ALLOWED: dict[str, tuple[str, ...]] = {
     APPENDIX_ARM: ("validation",),
 }
 
-#: VSMT-lean training recipe values already frozen by D-224 (its "base model" item).
+#: Rb-ERI training recipe values already frozen by D-224 (its "base model" item).
 TRAINING_FROZEN = (
     ("arms.VSMT-lean.training.learning_rate", 1e-3),
     ("arms.VSMT-lean.training.epochs", 20),
@@ -369,10 +369,10 @@ def low_association_logits(inputs: Mapping[str, Any], *, d_low: float | None) ->
 
 
 def hand_cost_association_logits(inputs: Mapping[str, Any], *, theta_b: float) -> dict[str, Any]:
-    """Stateless hand scores in VSMT-lean's association and birth slots (HandCost, D-224-SW ruling S).
+    """Stateless hand scores in Rb-ERI's association and birth slots (HandCost, D-224-SW ruling S).
 
     Logit = cosine for every recalled pair (no gate; a retracted entity may be revived) and BIRTH logit =
-    theta_b.  The decision structure and the solver are VSMT-lean's with the learned heads replaced by two hand
+    theta_b.  The decision structure and the solver are Rb-ERI's with the learned heads replaced by two hand
     scores, so HandCost measures what learned costs add under the same structure; ELU-P separately measures
     temporally accumulated probabilistic forgetting.  No gradient.
     """
@@ -390,7 +390,7 @@ def hand_cost_association_logits(inputs: Mapping[str, Any], *, theta_b: float) -
 
 
 def hand_cost_existence(rows: Sequence[Mapping[str, Any]], order: Sequence[str], *, rho_h: float) -> dict[str, str]:
-    """Stateless hand score in VSMT-lean's existence slot: this frame's free-space coverage against rho_h."""
+    """Stateless hand score in Rb-ERI's existence slot: this frame's free-space coverage against rho_h."""
 
     rho = _finite(rho_h, "rho_h_invalid")
     _require(0.0 < rho <= 1.0, "rho_h_invalid")
@@ -551,7 +551,7 @@ def rac_observe_matches(state: Mapping[str, int], entity_ids: Sequence[str]) -> 
 
 
 def learned_existence(existence_logits: Mapping[str, float], *, tau_r: float) -> dict[str, str]:
-    """VSMT-lean and its learned ablations: sigmoid(r) >= tau_r retracts."""
+    """Rb-ERI and its learned ablations: sigmoid(r) >= tau_r retracts."""
 
     tau = _finite(tau_r, "tau_r_invalid")
     _require(0.0 < tau < 1.0, "tau_r_invalid")
@@ -676,7 +676,7 @@ def assert_rollout_config(
     """The registered ELU-P rollout configuration must be a no-gate member of the grid.
 
     Returns the three registered values completed with d_a = None, refused when that is not a grid member
-    (D-224-X ruling X4).  The configuration produces VSMT-lean's DAgger round-0 memory rollouts and
+    (D-224-X ruling X4).  The configuration produces Rb-ERI's DAgger round-0 memory rollouts and
     HeuristicLabel's public labels, the same cell in S2-05 and S3-03, independent of validation selection.
     Selects nothing.
     """
@@ -716,7 +716,7 @@ def assert_split_allowed(arm: str, split: str) -> None:
 def ctx_admission(totals: Mapping[str, int]) -> dict[str, Any]:
     """VSMT-lean-ctx is admitted only if amortization error is the largest S2-05 class.
 
-    Input: VSMT-lean's three decomposition counts on the S2-05 development table.  Only when the model's own
+    Input: Rb-ERI's three decomposition counts on the S2-05 development table.  Only when the model's own
     errors (amortization error) exceed both recall misses and teacher errors does a stronger decision network
     have a target; otherwise the bottleneck is the front end or the labels and, per D-224-EFG, the front end
     is changed first.  Reads no metric value.  The optional arm was dropped from S3 (registered, not run;

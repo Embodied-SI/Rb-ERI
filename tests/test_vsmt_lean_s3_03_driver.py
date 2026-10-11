@@ -795,7 +795,7 @@ class SubcommandTests(unittest.TestCase):
                 for seed in (arms.SEEDS if seeded else (None,)):
                     if heads := (driver.heads_arm(arm) if seed == 31 else None):
                         if heads == "VSMT-lean":
-                            continue  # VSMT-lean s31 diverged: neither VSMT-lean nor NoVersion has a group
+                            continue  # Rb-ERI s31 diverged: neither Rb-ERI nor NoVersion has a group
                     rows = [{"episode_id": e, "config": config, "report": synthetic_report(arm, index, seed, e.replace("procthor10k-0.1.2-train-", "h"))}
                             for e in episodes]
                     pool.write_json(self.ctx.merged_path("instance", arm, index, seed),

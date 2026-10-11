@@ -2,17 +2,17 @@
 """Ruling 95 (a): the main question read directly on the development houses (report; the reading rule is fixed before the run).
 
 Ruling 95 brings S2-R back to the main question: do the learned lifecycle operations maintain memory better than AssocOnly,
-which learns association the same way but has no lifecycle operations? Inputs: merged node audits of joint VSMT-lean (five
+which learns association the same way but has no lifecycle operations? Inputs: merged node audits of joint Rb-ERI (five
 round-1 heads; association and existence both decided by the learned heads; registered configuration tau_r 0.5, ln w
 correction, k' = 3), AssocOnly retrained with the same association-side changes (five seeds) and the four rule arms (TAF,
 ELU-P, RAC, LOW; development configurations, no seeds). Outputs:
-  * the 82-1 order of VSMT-lean against AssocOnly on six metrics under the pre-registered rule (at least 4 seeds with the
+  * the 82-1 order of Rb-ERI against AssocOnly on six metrics under the pre-registered rule (at least 4 seeds with the
     same sign and |mean gap| above the standard deviation of the 5 gaps), computed by ruling82_seed_analysis as is;
   * the ruling-95 classification, fixed before the run: Missing residual rate established better and neither node F1 nor
     identity continuity established worse -> gain shown on development; Missing residual rate better but node F1 or identity
     continuity established worse -> trade-off, no gain claimed; Missing residual rate not established better -> no gain shown
     on development (not distinguishable is not evidence of no effect);
-  * the rule arms' house means and the ruling-85-4 reading: VSMT-lean's five-seed mean Missing residual rate as a multiple of
+  * the rule arms' house means and the ruling-85-4 reading: Rb-ERI's five-seed mean Missing residual rate as a multiple of
     the best rule arm's (>= 2 calls for a framing ruling before S3-01, per 85-4); the four ruling-89-4 lines are reported for
     reference only, without pass/fail.
 Example: Missing residual gaps -0.10, -0.08, -0.12, -0.05, +0.01 have 4 of the same sign and |mean| 0.068 > sd 0.050; with
@@ -23,7 +23,7 @@ confirmation set.
 Reused outside S2-R: `read` by s2_06_reading.py (S2-06 ruling 100-3 reading, both front ends).
 
 Usage:
-  python ops/vsmt/ruling95_reading.py --group VSMT-lean:7:<merged audit> ... --group AssocOnly:59:<merged audit> \
+  python ops/vsmt/ruling95_reading.py --group Rb-ERI:7:<merged audit> ... --group AssocOnly:59:<merged audit> \
       --rule-arm TAF:<merged audit> --rule-arm ELU-P:<...> --rule-arm RAC:<...> --rule-arm LOW:<...> \
       [--reference-82 results/vsmt_lean_s2_05_ruling82_seed_analysis_18f943f.json] --output <json>
 """

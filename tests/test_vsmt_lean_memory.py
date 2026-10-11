@@ -1,4 +1,4 @@
-"""D-224 / S0-01 contract tests for the VSMT-lean entity memory core.
+"""D-224 / S0-01 contract tests for the Rb-ERI entity memory core.
 
 The continue gate for S0-01 is: every one of the five atoms has a positive and
 a negative case, an illegal program rolls back the whole frame, the caller's

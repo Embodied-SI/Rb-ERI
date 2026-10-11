@@ -1,4 +1,4 @@
-"""D-224 / D-224-S1: the three pure helpers the VSMT-lean cores reuse.
+"""D-224 / D-224-S1: the three pure helpers the Rb-ERI cores reuse.
 
 METHOD §13 says the lean cores reuse only pure functions that cannot produce
 a second numerical semantics.  They used to reach those functions through

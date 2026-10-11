@@ -1,7 +1,7 @@
 """S2-06 tests: the ruling 100-3 reading, and the 82-1 comparison generalised to any two arms without changing its default output.
 
 Pinned: (1) the committed instance-segmentation development reading (ruling 96, LOG-295) is reproduced field for field from
-the committed merged audits it names -- so the generalised 82-1 code and ruling95_reading are unchanged in effect; (2) VSMT-lean
+the committed merged audits it names -- so the generalised 82-1 code and ruling95_reading are unchanged in effect; (2) Rb-ERI
 against NoVersion reads by the same 82-1 rule with orders named after the two arms and no gate; (3) on hand-made audits the
 SAM2 and instance-segmentation classifications are set side by side; (4) a SAM2 input naming another mask source, or a
 recomputation that differs from the committed reading, is refused.  CPU only, seconds.

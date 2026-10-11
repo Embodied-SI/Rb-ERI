@@ -1,4 +1,4 @@
-"""D-224 / S0-02: read-only checks for the VSMT-lean intervention data contract.
+"""D-224 / S0-02: read-only checks for the Rb-ERI intervention data contract.
 
 This module holds every rule that decides *whether a generated episode is
 admissible*, and none of the machinery that generates one.  It does not open

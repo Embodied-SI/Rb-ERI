@@ -3,7 +3,7 @@
 Pinned: (1) the two-level statistic draws houses and seeds independently and every drawn seed uses the same drawn houses;
 (2) the lower bound uses the same index rule as lean_teacher.paired_house_bootstrap; (3) the favourable 82-1 condition needs all
 five seeds, at least four favourable gaps and a mean above the sd of the gaps; (4) the conditional and common identity-continuity
-definitions and the one-list exclusion; (5) the difference sign (positive = VSMT-lean better) for a lower-is-better metric;
+definitions and the one-list exclusion; (5) the difference sign (positive = Rb-ERI better) for a lower-is-better metric;
 (6) the simulation is reproducible from its seed and its rows carry no seed effect.  CPU only, seconds.
 """
 from __future__ import annotations
@@ -57,7 +57,7 @@ class TestRules(unittest.TestCase):
         self.assertTrue(plan.stable_in_favour([0.1, 0.1, 0.1, 0.1, -0.01]))
         self.assertFalse(plan.stable_in_favour([0.1, 0.1, -0.1, 0.1, 0.1]))  # mean 0.06 < sd 0.089
         self.assertFalse(plan.stable_in_favour([0.1, 0.1, 0.1, 0.1]))  # four seeds cannot be judged
-        self.assertFalse(plan.stable_in_favour([-0.1, -0.1, -0.1, -0.1, -0.1]))  # stable but against VSMT-lean
+        self.assertFalse(plan.stable_in_favour([-0.1, -0.1, -0.1, -0.1, -0.1]))  # stable but against Rb-ERI
 
     def test_identity_continuity_definitions(self):
         self.assertEqual(plan.identity_continuity_conditional(ic_report(2, 4, 4)), 0.5)

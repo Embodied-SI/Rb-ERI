@@ -16,7 +16,7 @@
 #           (manifest, raw, geometry table and cache all present)
 #   run     the job pool (ops/vsmt/s3_03_jobs.py; the graph is s3_03_manifest.build_jobs): per front end the calibration pass ->
 #           the ELU-P fit (run-local values) -> round 0 with HeuristicLabel's labels -> the round-0 gate (G4, split nuisance probe)
-#           -> round-0 training of VSMT-lean, AssocOnly, HeuristicLabel -> round 1 -> round-1 training at five seeds -> the
+#           -> round-0 training of Rb-ERI, AssocOnly, HeuristicLabel -> round 1 -> round-1 training at five seeds -> the
 #           learned-arm validation audits; the rule-arm audits fill free cores from the start (ELU-P after its fit); the audit
 #           and training equivalence probes run alongside and stop the run if they differ; merges, readings, determinism probe
 #   export  $EXPORT_DIR/vsmt_lean_s3_03_*_<tag>.json (inputs, fits, gates, trainings, readings, jobs)

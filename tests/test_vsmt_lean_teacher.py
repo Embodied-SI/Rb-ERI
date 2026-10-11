@@ -1436,7 +1436,7 @@ class TestMainGateRuling102(unittest.TestCase):
     SEEDS = (7, 19, 31, 43, 59)
 
     def table(self, vsmt, assoc, rules=None, houses=6):
-        """per_house[h][run]: VSMT-lean and AssocOnly values by seed (callables of house index and seed) and rule arms."""
+        """per_house[h][run]: Rb-ERI and AssocOnly values by seed (callables of house index and seed) and rule arms."""
 
         from vsmt.lean_teacher import run_key
 
