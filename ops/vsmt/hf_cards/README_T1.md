@@ -8,9 +8,12 @@ tags:
 - ai2thor
 ---
 
-# VSMT-lean S3 evaluation inputs (T1)
+# Rb-ERI S3 evaluation inputs (T1)
 
-Evaluation inputs of the VSMT-lean S3 experiments: the validation and test splits of the ProcTHOR-10K episodes (house-level
+Rb-ERI (Retraction-based Entity Re-Identification) was registered as VSMT-lean; file names, archive paths and the arm
+key `VSMT-lean` in this repository keep that name.
+
+Evaluation inputs of the Rb-ERI S3 experiments: the validation and test splits of the ProcTHOR-10K episodes (house-level
 split; manifests in the code repository), each as `<split>/<kind>/<episode>.tar` with `kind` one of `raw` (RGB-D frames, poses
 and private ground truth written by the episode generator), `geometry` (per-episode geometry tables), `instance_cache` and
 `sam2_cache` (per-frame fragment masks and descriptors for the two front ends), plus each root's top-level files under

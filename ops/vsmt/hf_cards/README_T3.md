@@ -8,9 +8,12 @@ tags:
 - ai2thor
 ---
 
-# VSMT-lean S3 training inputs (T3)
+# Rb-ERI S3 training inputs (T3)
 
-Training inputs of the VSMT-lean S3 experiments: the train split of the ProcTHOR-10K episodes, in the same layout as the
+Rb-ERI (Retraction-based Entity Re-Identification) was registered as VSMT-lean; file names, archive paths and the arm
+key `VSMT-lean` in this repository keep that name.
+
+Training inputs of the Rb-ERI S3 experiments: the train split of the ProcTHOR-10K episodes, in the same layout as the
 evaluation tier (`train/<kind>/<episode>.tar`, `kind` in `raw`, `geometry`, `instance_cache`, `sam2_cache`; root files under
 `train/<kind>/_root/`). Every cache episode was checked against the S3-02 cache exports before upload.
 

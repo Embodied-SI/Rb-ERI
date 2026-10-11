@@ -8,7 +8,10 @@ tags:
 - ai2thor
 ---
 
-# VSMT-lean S3 run records (T2)
+# Rb-ERI S3 run records (T2)
+
+Rb-ERI (Retraction-based Entity Re-Identification) was registered as VSMT-lean; file names, archive paths and the arm
+key `VSMT-lean` in this repository keep that name.
 
 Run records of S3-03 (training on train, configuration selection on validation) and S3-05 (the one test run): training
 rounds, checkpointed heads, per-job audit outputs and the pools' job states, one tar per top-level directory of each run root

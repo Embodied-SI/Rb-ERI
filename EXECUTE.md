@@ -10,6 +10,10 @@
 
 ## 当前看板
 
+**2026-10-11: method renamed Rb-ERI; repository moved to Embodied-SI/Rb-ERI (D-224-NAME)** — documentation,
+paper, card sources and code comments use Rb-ERI (Retraction-based Entity Re-Identification); identifiers, result
+files, records and the Hugging Face data keep VSMT-lean; no number or claim changes.
+
 **2026-10-09: s3-07-impl merged into main (LOG-318)** — the S3-07 code is on `main` (`21e0d6e`; not in `paper-v1`); 1,423 tests OK; README has its own section on using the VSMT memory.
 
 **2026-10-09: instance-mask ReID head and ruling-37 salt released (LOG-317)** — T0 revision `1fc9efe8` adds both (paper revision unchanged); `reproduce/fetch_extras.py` restores them; the instance-mask probe audit re-run with the released head equals the server's in metrics and decomposition.

@@ -7,9 +7,12 @@ tags:
 - ai2thor
 ---
 
-# VSMT-lean S3 results and weights (T0)
+# Rb-ERI S3 results and weights (T0)
 
-Results and weights of the VSMT-lean S3 experiments: the round-1 association/existence heads of every learned arm and seed
+Rb-ERI (Retraction-based Entity Re-Identification) was registered as VSMT-lean; file names, archive paths and the arm
+key `VSMT-lean` in this repository keep that name.
+
+Results and weights of the Rb-ERI S3 experiments: the round-1 association/existence heads of every learned arm and seed
 for both front ends (`weights/<front>/<arm>.tar`), the ReID projection heads (`reid/`), the S3-04 freeze directory
 (`s3-04-dea8c20/`) and all experiment exports (`exports/`, including the S3-05 and S3-07 statistics).
 

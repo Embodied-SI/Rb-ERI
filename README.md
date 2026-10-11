@@ -1,4 +1,4 @@
-# VSMT-lean: Versioned Lifecycle Transactions for Object-Level Spatial Memory
+# Rb-ERI: Retraction-based Entity Re-Identification for Object-Level Spatial Memory
 
 Code, configurations, result exports and paper source for the manuscript *Versioned Lifecycle Transactions for
 Object-Level Spatial Memory: A Pre-Registered Evaluation Under Unobserved Changes* (under review).
@@ -15,16 +15,20 @@ Paper source: [paper/](paper/)
 | check what my machine lacks for a reproduction level | `uv run python reproduce/check_env.py --level L0` (`L1`, `L2`, `L3`, `full`, `plugin`) |
 | re-run the evaluation from the released data | `uv run python reproduce/l1_eval.py` · [docs/REPRODUCE.md, section 1](docs/REPRODUCE.md#1-reproduction-levels-and-determinism) |
 | regenerate the data and retrain, stage by stage | [docs/REPRODUCE.md, section 11](docs/REPRODUCE.md#11-full-pipeline-from-procthor-10k) |
-| use the VSMT memory on my own RGB-D stream (robot, dataset) | [Use the VSMT memory in your own system](#use-the-vsmt-memory-in-your-own-system) below · [docs/PLUGIN.md](docs/PLUGIN.md) |
+| use the Rb-ERI memory on my own RGB-D stream (robot, dataset) | [Use the Rb-ERI memory in your own system](#use-the-rb-eri-memory-in-your-own-system) below · [docs/PLUGIN.md](docs/PLUGIN.md) |
 | understand the method, data and admissible claims | [docs/METHOD.md](docs/METHOD.md) · [docs/DATA.md](docs/DATA.md) |
 
 ## Overview
 
 A robot that revisits a changed home must decide, for every remembered object it cannot see, whether the object is
-hidden, missed by the detector, removed or moved, and it must re-identify objects that were moved. VSMT-lean is the
-entity-lifecycle core of Versioned Structural Memory Transactions (VSMT; the full design also revises places and
-relations, which are not part of this work): an object-level memory that applies five operations per frame as one
-transaction.
+hidden, missed by the detector, removed or moved, and it must re-identify objects that were moved. Rb-ERI
+(Retraction-based Entity Re-Identification) is an object-level memory that applies five operations per frame as one
+transaction; a retraction closes an entity's version instead of deleting it, so the entity can later be reactivated
+under its old identity. Places and relations are not revised in this work.
+
+The name Rb-ERI is used since 2026-10-11 (docs/DECISIONS.md, D-224-NAME). Code identifiers, configuration keys,
+result files, the Hugging Face release and records written before that date keep the earlier name VSMT-lean: arm
+key `VSMT-lean`, modules `src/vsmt/`, package `vsmt_memory`, result files `vsmt_lean_*`.
 
 | Operation | Effect |
 |---|---|
@@ -49,7 +53,7 @@ simulator's instance ground truth. Candidate sets and feature tables are sealed 
 ground-truth file is opened, so the hindsight teacher can label candidates but never add, remove or reorder them; no
 object identity, class, change log or future frame is ever an input.
 
-The evaluation compares nine arms (compared methods) that read byte-identical front-end outputs: VSMT-lean; the
+The evaluation compares nine arms (compared methods) that read byte-identical front-end outputs: Rb-ERI; the
 ablations `AssocOnly` (same association head, only `BIND`/`BIRTH`; the counterfactual for the lifecycle vocabulary),
 `NoVersion` (retraction deletes), `HeuristicLabel` (labels copied from a rule-based arm) and `HandCost` (hand-written
 costs); and four rule-based mechanisms re-implemented on the same interface (`TAF`, `ELU-P`, `RAC`, `LOW`; adapters of
@@ -65,12 +69,12 @@ Test split, read once: 87 of the 100 test houses produced usable episodes (85 wi
 houses on which the metric is undefined for any main-table run (every arm and seed): 62 houses for MRR and 58 for IdC
 with instance masks, 61 and 56 with SAM 2.1. The inference target is the training procedure
 (five seeds). The primary hypothesis was tested in a fixed order against the same-recipe `AssocOnly` ablation.
-"Lower bound" is the one-sided 95% lower bound of VSMT-lean's advantage from a two-level (seeds and houses) bootstrap.
+"Lower bound" is the one-sided 95% lower bound of Rb-ERI's advantage from a two-level (seeds and houses) bootstrap.
 MRR (Missing residual rate) is the share of removed or moved objects that still have an entity (a *stale entity*) at
 their old place after it was seen empty; IdC (identity continuity) is the share of moved objects whose first new
 observation is attached to the entity that carried them before.
 
-| Front end | Metric | AssocOnly | VSMT-lean | Lower bound | Fixed-order step |
+| Front end | Metric | AssocOnly | Rb-ERI | Lower bound | Fixed-order step |
 |---|---|---|---|---|---|
 | Simulator instance masks | MRR (lower is better) | 0.642 | 0.115 | 0.467 | 1: holds |
 | Simulator instance masks | IdC | 0.104 | 0.211 | 0.049 | 1: holds |
@@ -79,7 +83,7 @@ observation is attached to the entity that carried them before.
 
 - The simulator instance masks segment almost perfectly, so the first two rows concern memory updates given near-ideal
   segmentation. With SAM 2.1, stale entities also fall, but identity continuity does not improve, and more than half
-  of VSMT-lean's in-scope retractions (walls, floors, doors, windows and ceilings excluded) concern objects still in
+  of Rb-ERI's in-scope retractions (walls, floors, doors, windows and ceilings excluded) concern objects still in
   place.
 - Node F1 differs from `AssocOnly` by +0.003 (instance masks) and +0.009 (SAM 2.1); no margin was registered, so these
   are reported as differences only.
@@ -94,7 +98,7 @@ Table III) are in the paper and in `results/`; [docs/REPRODUCE.md](docs/REPRODUC
 every table and figure to its file and fields. The admissible claims are fixed in [docs/METHOD.md](docs/METHOD.md)
 (section 2, ruling 113).
 
-## Use the VSMT memory in your own system
+## Use the Rb-ERI memory in your own system
 
 The memory of the paper is packaged as [`vsmt_memory/`](vsmt_memory/), a plug-in for any RGB-D stream: per frame it takes
 RGB, metric depth, camera intrinsics, a camera pose and instance masks, and returns the frame's operations (`BIND`,

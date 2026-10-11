@@ -1,4 +1,9 @@
-# Using the VSMT-lean memory on your own RGB-D stream
+# Using the Rb-ERI memory on your own RGB-D stream
+
+> Name: Rb-ERI (Retraction-based Entity Re-Identification) is the name of the method since 2026-10-11 (decision
+> D-224-NAME). Code identifiers, configuration keys, result files, the Hugging Face release and records written
+> before that date keep the earlier name VSMT-lean (arm key `VSMT-lean`, modules `src/vsmt/`, package `vsmt_memory`,
+> result files `vsmt_lean_*`).
 
 The package [`vsmt_memory/`](../vsmt_memory/) wraps the object-level memory of the paper (entity records, recall,
 frame-level joint assignment, existence decisions and the versioned executor) for any RGB-D stream with camera poses
@@ -139,7 +144,7 @@ for a planner or world model), `memory.memory` (the full record: version chains,
 
 ## 5. Weights
 
-`VSMTMemory.from_pretrained(front_end="sam2", seed=7)` loads the round-1 VSMT-lean cost heads of one training seed, the
+`VSMTMemory.from_pretrained(front_end="sam2", seed=7)` loads the round-1 Rb-ERI cost heads of one training seed, the
 ReID projection head shared by all compared methods, and the existence threshold `tau_r` that was selected on
 validation for that front end (0.25 for SAM 2.1). Each file is checked against the release manifest and against the
 digest recorded by the freeze that preceded the test run.

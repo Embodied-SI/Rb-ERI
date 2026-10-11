@@ -1,4 +1,9 @@
-# Reproducing VSMT-lean
+# Reproducing Rb-ERI
+
+> Name: Rb-ERI (Retraction-based Entity Re-Identification) is the name of the method since 2026-10-11 (decision
+> D-224-NAME). Code identifiers, configuration keys, result files, the Hugging Face release and records written
+> before that date keep the earlier name VSMT-lean (arm key `VSMT-lean`, modules `src/vsmt/`, package `vsmt_memory`,
+> result files `vsmt_lean_*`).
 
 This document gives the commands, inputs, stop conditions and outputs for every stage behind the paper, from the
 committed result files back to data generation. The method is specified in [METHOD.md](METHOD.md), the data in
@@ -77,7 +82,7 @@ own output directory before reading anything, never writes into the test roots (
 opened by receipt `4fd08d4f…`), and exports only the comparison, never new statistics. A re-run by the project owner is
 also logged in EXECUTE as a reproduction read. The instance-mask audits also need the instance-mask ReID head
 (`5cea91cf…`), added to T0 after the paper's revision; `reproduce/fetch_extras.py --dest <root>` restores it. Checked
-on 2026-10-09: the instance-mask probe audit of VSMT-lean (seed 7) re-run with it on a laptop gave metrics and error
+on 2026-10-09: the instance-mask probe audit of Rb-ERI (seed 7) re-run with it on a laptop gave metrics and error
 decomposition equal to the server's (EXECUTE LOG-317).
 
 **L3 from the released data.** The S3-03 and S3-04 drivers require the four test roots to be sealed (they check the
@@ -97,7 +102,7 @@ Determinism boundary:
   `/etc/environment` loaded through `LD_PRELOAD` (EXECUTE LOG-304 and LOG-307 section C; the exact setting is not
   recorded); other CPUs may differ in the last bits.
 - Audits are deterministic within one environment (the S3-04 probes reproduce bit for bit on the servers). Across
-  environments a few near-tie decisions can differ: the S3-04 probe audit of VSMT-lean (SAM 2.1, seed 7) on
+  environments a few near-tie decisions can differ: the S3-04 probe audit of Rb-ERI (SAM 2.1, seed 7) on
   `procthor10k-0.1.2-train-02318`, re-run on a Windows laptop (Intel 13th generation, torch 2.14.0, numpy 2.5.2) instead
   of the server (Linux, Xeon 8352V, torch 2.8.0, numpy 2.3.2), gave identical final entity states and identical
   values for every metric of the audit report, while the error decomposition differed in 19 of about 5,500 decisions
@@ -166,11 +171,11 @@ statistic, only the SHA-256 of every indexed file, compares them with the stage 
 disagree with a manifest, `src/` or `configs/` different from the frozen commit, output exists); 3 recomputation
 differs; 4 written, but a consistency check reported a problem; 1 unexpected error. D2–D8 are descriptive readings
 computed after the test (no gate, no correction for multiplicity); D3 and D5 are advantages, signed so that positive
-favours VSMT-lean.
+favours Rb-ERI.
 
 | Inputs (read only) | Outputs |
 |---|---|
-| `vsmt_lean_s3_05_*_8d58475.json` (seven files, each checked against the S3-05 manifest), `vsmt_lean_s3_04_{freeze,manifest}_dea8c20.json` | D1 recomputation check, D2 all metrics of VSMT-lean against AssocOnly, D3 two-sided 90% intervals, D4 event and denominator counts, D5 per-house paired differences, D6 decomposition shares, D7 size and cost, D8 consistency checks; the paper index |
+| `vsmt_lean_s3_05_*_8d58475.json` (seven files, each checked against the S3-05 manifest), `vsmt_lean_s3_04_{freeze,manifest}_dea8c20.json` | D1 recomputation check, D2 all metrics of Rb-ERI against AssocOnly, D3 two-sided 90% intervals, D4 event and denominator counts, D5 per-house paired differences, D6 decomposition shares, D7 size and cost, D8 consistency checks; the paper index |
 
 **Scripts behind other committed files.** These scripts are not stage drivers, but the paper relies on what they wrote;
 each reads only committed files unless stated otherwise:
@@ -289,7 +294,7 @@ points are listed at the top of [`ops/vsmt/s2_06_sam2.sh`](../ops/vsmt/s2_06_sam
 | check | full test suite; all inputs written to the run manifest | about 10 min |
 | pilot | the largest SAM 2.1 episode: its calibration job (kept as part of the calibration pass) and one timed TAF audit | 1.5–2.5 h |
 | calibration → grid-review → elu-p-fit | ruling-75 calibration pass; the grid review of ruling 100-2 step 2 (judged relative to instance masks per ruling 101 (1)(a); stops if out of grid); ELU-P fit (summed over all development episodes, ruling 101 (2)(a); the first run stops here for the registration commit) | 1.5–2.5 h |
-| round0 → train0 → round1 → train1 | round-0 ELU-P records; seed 7 of both learned arms; their round-1 records; 5 seeds per arm (grouped checkpoint selection for VSMT-lean) | 5–7 h |
+| round0 → train0 → round1 → train1 | round-0 ELU-P records; seed 7 of both learned arms; their round-1 records; 5 seeds per arm (grouped checkpoint selection for Rb-ERI) | 5–7 h |
 | audits → instance-noversion | 19 groups × 39 audits on SAM 2.1; NoVersion fill-in on instance masks, 5 × 39 (first checks that the current code reproduces one 7c76970 audit field for field) | 7–10 h |
 | merge → reading → verify | merge, interpretation per ruling 100-3, determinism probe, all digests checked, final run manifest | about 30 min |
 
@@ -431,8 +436,8 @@ subcommands are in [`ops/vsmt/s3_03_manifest.py`](../ops/vsmt/s3_03_manifest.py)
 | check | full test suite; the checks above; the usable train and validation episodes of each front end (in the list, raw, geometry and cache present) written to `$RUN_ROOT/inputs.json` |
 | calibration pass → fit | TAF θ_a 0.7 without gate, with histograms and ELU-P counts; the three values fitted on all usable S3 train episodes and written as in-run values (ruling 104-1 1b); a rejected (degenerate) fit stops the run |
 | round 0 → gate | ELU-P trajectories under rollout_config plus this front end's fitted values, writing teacher records and HeuristicLabel records together; gate: the HeuristicLabel decision function matches the arm's decisions row by row on ELU-P's own trajectories (G4), and the largest nuisance-probe advantage over the whole split is ≤ 0.05; a failure stops before training |
-| training | round 0 of three arms (seed 7, checkpoint selected on the total validation loss) → round-1 trajectories (VSMT-lean and HeuristicLabel with τ_r 0.5, AssocOnly without configuration) → round 1 with 5 seeds per arm (grouped checkpoint selection for VSMT-lean and HeuristicLabel); first 240 houses for training, last 60 for checkpoint selection (104-1 1a); the thread count is chosen during round 0 by measuring 1–4 threads on 20 + 5 houses and fixed for the run; the optimiser uses AdamW's multi-tensor path (bit-identical to the registered path: pinned by the test suite and rechecked on real records by the training-equivalence probe); a training that crashes or runs out of memory is rerun once with the same inputs and seed; divergence is recorded as a result, seeds are not replaced |
-| audits | 208 groups on validation: deterministic arms TAF 12, ELU-P 12, RAC 12, LOW 5 and HandCost 12 (ELU-P and others with fitted values); learned arms VSMT-lean, NoVersion and HeuristicLabel with 10 τ_r values × 5 seeds each, AssocOnly × 5 seeds; each job is up to 3 (deterministic arms) or 5 (learned arms) configurations of one arm and one head set on one episode, the cache is verified once per job, metrics only; jobs are not preemptible, so a single job is kept under about half an hour to avoid long low-priority jobs blocking the critical path |
+| training | round 0 of three arms (seed 7, checkpoint selected on the total validation loss) → round-1 trajectories (Rb-ERI and HeuristicLabel with τ_r 0.5, AssocOnly without configuration) → round 1 with 5 seeds per arm (grouped checkpoint selection for Rb-ERI and HeuristicLabel); first 240 houses for training, last 60 for checkpoint selection (104-1 1a); the thread count is chosen during round 0 by measuring 1–4 threads on 20 + 5 houses and fixed for the run; the optimiser uses AdamW's multi-tensor path (bit-identical to the registered path: pinned by the test suite and rechecked on real records by the training-equivalence probe); a training that crashes or runs out of memory is rerun once with the same inputs and seed; divergence is recorded as a result, seeds are not replaced |
+| audits | 208 groups on validation: deterministic arms TAF 12, ELU-P 12, RAC 12, LOW 5 and HandCost 12 (ELU-P and others with fitted values); learned arms Rb-ERI, NoVersion and HeuristicLabel with 10 τ_r values × 5 seeds each, AssocOnly × 5 seeds; each job is up to 3 (deterministic arms) or 5 (learned arms) configurations of one arm and one head set on one episode, the cache is verified once per job, metrics only; jobs are not preemptible, so a single job is kept under about half an hour to avoid long low-priority jobs blocking the critical path |
 | probes | audit equivalence (a full audit and a metrics-only audit agree field for field on one train episode) before all audits; training equivalence (the registered list path and this run's streaming plus multi-tensor path are bit-identical) before round-0 training; a failure stops the run; finally one audit on a validation episode is rerun to check determinism |
 | readings | merge completeness; selection readings per front end (per-metric exclusion lists, house means, seed means, missing seeds noted, AssocOnly reference values); report only: 89-3 ① state coverage, grid positions of both calibration passes (101 (1)(a) reading), label composition |
 | export → verify | exports `$AUTODL/vsmt_outputs/exports/vsmt_lean_s3_03_*_<tag>.json`; verify requires all jobs finished, all gates passed, and the fitted values registered in S0-05 equal to this run's values bit for bit |
@@ -470,7 +475,7 @@ S3-04 reads the completed S3-03 run root (read only) and its exports and writes 
 configuration of every arm per front end, the 25 runs per test episode (one configuration for each of the 5
 deterministic arms, i.e. the four rule-based arms and HandCost; 5 seeds for each of the 4 learned arms), the statistics
 S3-05 computes, and the fingerprints of every code file (`src/`, `ops/`, `configs/`) and weight file that run on test
-day. For example, for VSMT-lean with instance masks, those of the 10 τ_r values whose validation Missing residual rate
+day. For example, for Rb-ERI with instance masks, those of the 10 τ_r values whose validation Missing residual rate
 is not below AssocOnly's are removed first, and the remaining value with the highest node F1 is chosen. S3-04 does not read test, train or compute the gate; S3-05 unseals test only after the
 receipt is committed and pushed and the project owner confirms (106-5).
 
@@ -514,7 +519,7 @@ unsealing reruns the whole of S3-04 with `PREVIOUS_RECEIPT` set (see above; 106-
 ## 8. S3-05: one-time test run (ruling 107)
 
 S3-05 runs the frozen arms on test once: it takes the code, configurations and weights pinned by the S3-04 freeze
-receipt and the test split, read once, and produces the main table of both front ends, the comparison of VSMT-lean with
+receipt and the test split, read once, and produces the main table of both front ends, the comparison of Rb-ERI with
 every ablation and rule-based arm, the three steps of the fixed-order primary gate, the node-F1 difference with its 90%
 interval, the decomposition, size and cost, and per-episode failures. If any file in `src/` changed after the receipt
 was committed, `check` stops and test stays sealed. It runs once and tunes nothing.

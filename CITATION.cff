@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this code, the data or the results, please cite the paper below."
-title: "VSMT-lean: Versioned Lifecycle Transactions for Object-Level Spatial Memory"
+title: "Rb-ERI: Retraction-based Entity Re-Identification for Object-Level Spatial Memory"
 type: software
 authors:
   - family-names: Sun

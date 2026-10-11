@@ -3362,3 +3362,34 @@
   file changed) and verified by download; `reproduce/fetch_extras.py` restores them. Effect: the instance-mask audits
   can be re-run from the release, and the pipeline from ProcTHOR-10K can regenerate the paper's episodes without pin
   edits; new data for other purposes should use a new salt. No number or claim changes.
+
+## D-224-NAME: Method name Rb-ERI and the repository location (2026-10-11; append-only section)
+
+- **Request.** The supervisor judged that "VSMT" does not name the core technical component and proposed
+  Rb-ERI, Retraction-based Entity Re-Identification (in the SCI-template draft of 2026-10-11, title "Versioned Lifecycle
+  Transactions for Object Spatial Memory via Retraction-based Entity Re-Identification"), and asked that the repository
+  live under a project-level account. The user renamed the GitHub repository to `Rb-ERI` and transferred it to the
+  organization Embodied-SI (links updated in a6ea5ec), then asked: 「你现在也把全部文档都更新一下，把VSMT的这些字眼换成Rb-ERI以及相关的描述」
+  ("now update all the documentation too, replacing the VSMT wording with Rb-ERI and the related descriptions") and
+  「然后还有代码里面的内容啊，AUDIT审计里面的，还有HUGGINGFACE上面的仓库，全都要改」 ("and the content in the code, in the
+  audits, and the Hugging Face repositories, all of it"). After the scope options were laid out, the user approved
+  「按推荐来，HF我等下去建组织改名」 ("go with the recommendation; I will create the HF organization and rename later").
+- **Decision.**
+  - The method is called Rb-ERI in all documentation, the paper (text, tables and figures, through display names in
+    `paper/tools/`), `CITATION.cff`, the Hugging Face card sources (`ops/vsmt/hf_cards/`) and in comments and
+    docstrings of `src/`, `ops/`, `tests/`, `vsmt_memory/` and `reproduce/` (checked by syntax tree, as under
+    D-224-DOC; tag `paper-v1` keeps the frozen bytes).
+  - Identifiers keep the earlier name: the arm key `VSMT-lean` in configurations, code, result files and released
+    archives; the modules `src/vsmt/` and `ops/vsmt/`; the package `vsmt_memory` and class `VSMTMemory`; the
+    environment variables `VSMT_*`; the registered, never-run arm `VSMT-lean-ctx`. Renaming them would break the L0/L1
+    comparisons with the S3-05 records, the weight paths inside the released archives and existing imports. The
+    plug-in gains the alias `RbERIMemory` for `VSMTMemory`.
+  - Records are not edited: the committed result exports under `results/` (their sha256 are bound by the S3-03, S3-04,
+    S3-05 and release manifests), the EXECUTE and DECISIONS entries written before this section, and the released data
+    files and manifests. The documents state the mapping (arm key `VSMT-lean` = Rb-ERI) instead.
+  - Hugging Face: the user will create an organization and rename the four repositories; data files, archive paths,
+    manifests and the revisions cited by the paper stay unchanged, and the cards are re-uploaded with
+    `ops/vsmt/hf_release.py cards` once the new repository names exist. Until then the documents keep the
+    `Jsun0632/vsmt-lean*` identifiers.
+- **Effect.** No number, claim, rule, contract, configuration or code behaviour changes. The venue question raised by
+  the SCI-template draft (rulings 83-6 and 113-4) is not decided here.
