@@ -4,7 +4,7 @@
 \begin{figure}[t]
 \centering
 \input{figures/overview}
-\caption{The problem on one cup, moved from the table to the shelf while the robot is away. Circles are \emph{entities}, the memory's records of believed objects. A memory that can only bind and birth (\arm{AssocOnly}) typically keeps a stale entity and gives the cup a new identity (it keeps the identity only by binding the cup's new fragment to its old, still active entity); one that deletes (\arm{NoVersion}) loses the identity; VSMT-lean retracts the entity, closing its version without deleting it, and can reactivate it on the shelf. The Missing residual rate (MRR) counts removed or moved objects with an entity left at their old place after it was seen empty; identity continuity (IdC) counts moved objects whose first new observation is attached to the entity that carried them before. Illustration, not data.}
+\caption{The problem on one cup, moved from the table to the shelf while the robot is away. Circles are \emph{entities}, the memory's records of believed objects. A memory that can only bind and birth (\arm{AssocOnly}) typically keeps a stale entity and gives the cup a new identity (it keeps the identity only by binding the cup's new fragment to its old, still active entity); one that deletes (\arm{NoVersion}) loses the identity; Rb-ERI retracts the entity, closing its version without deleting it, and can reactivate it on the shelf. The Missing residual rate (MRR) counts removed or moved objects with an entity left at their old place after it was seen empty; identity continuity (IdC) counts moved objects whose first new observation is attached to the entity that carried them before. Illustration, not data.}
 \label{fig:overview}
 \end{figure}
 
@@ -14,7 +14,7 @@ A memory that keeps everything leaves \emph{stale entities}, records of objects 
 Most systems decide these cases with hand-set rules: threshold fusion~\cite{conceptgraphs2024}, existence probabilities or persistence filters~\cite{fusionpp2018,rosen2016persistence,perpetua2025}, or rendering the map and comparing it with the current view~\cite{dsg2026,dynamicgsg2025}.
 We ask a narrower question than ``which system is best'': does a \emph{learned, reversible} lifecycle vocabulary reduce stale entities and keep identities, compared with the same learned association without that vocabulary, when everything else is held fixed?
 
-We study VSMT-lean, the entity-lifecycle core of versioned structural memory transactions (the full design also revises places and relations, which we leave out).
+We study Rb-ERI (retraction-based entity re-identification), an entity-lifecycle memory for object-level maps; places and relations are not revised.
 The input is a stream of RGB-D frames with the simulator's camera poses, so there is no localization error; a frozen perception front end turns each frame into anonymous mask \emph{fragments}, image segments with geometry and an appearance descriptor but no object identity.
 Every frame, one joint assignment decides for every fragment whether it is new evidence for an existing entity (\op{BIND}), a returning entity (\op{REACTIVATE}) or a new object (\op{BIRTH}); an existence head decides, for every entity that should be visible but was not matched, whether to keep it (\op{NOOP}) or \op{RETRACT} it.
 A retracted entity leaves the map, but its closed version is kept, so the same identity can be reactivated later.

@@ -5,7 +5,7 @@ Writes the two data tables of the paper to ``paper/tables/*.tex``:
 - ``main.tex`` (Table II): the test results of both front ends, nine arms and nine metrics, plus the counts of changed
   objects recovered and not recovered; columns are grouped by the question each answers. Values come from the S3-05
   statistics (means, seed standard deviations, houses kept per column) and the S3-06 reanalysis (recovery counts);
-  e.g. VSMT-lean's node F1 is ``fronts.instance.main_table.node_prf1.VSMT-lean`` in
+  e.g. Rb-ERI's node F1 is ``fronts.instance.main_table.node_prf1.VSMT-lean`` in
   ``vsmt_lean_s3_05_statistics_8d58475.json``.
 - ``llm_op.tex`` (Table III): node F1 and false-retract rate of LLM-op and of every other arm (S3-04 frozen
   configurations) on the same validation episode, with the episode's percentile among the arm's validation episodes,
@@ -32,6 +32,8 @@ REANALYSIS = "vsmt_lean_s3_06_reanalysis_cd3ee83.json"
 LLM_OP_CONTEXT = "vsmt_lean_s4_llm_op_context_2b50a12.json"
 
 ARMS = ("VSMT-lean", "AssocOnly", "NoVersion", "HeuristicLabel", "HandCost", "TAF", "ELU-P", "RAC", "LOW")
+#: names printed in the paper; result files keep the arm key VSMT-lean (decision D-224-NAME)
+DISPLAY = {"VSMT-lean": "Rb-ERI"}
 FRONTS = (("instance", "Simulator instance masks"), ("sam2", "SAM 2.1 masks"))
 #: (metric key, column header, decimals); a down arrow marks metrics where lower is better, bold the two primary metrics
 METRICS = (
@@ -115,7 +117,7 @@ def main_table(stats: Mapping[str, Any], reanalysis: Mapping[str, Any]) -> str:
         for arm in ARMS:
             if arm in ("AssocOnly", "TAF"):
                 lines.append(r"\addlinespace[1.5pt]")
-            name = rf"\textbf{{{arm}}}" if arm == "VSMT-lean" else arm
+            name = rf"\textbf{{{DISPLAY[arm]}}}" if arm == "VSMT-lean" else arm
             cells = [recovery_counts(reanalysis, front, arm) if key is None
                      else mean_cell(block["main_table"][key].get(arm), specs[key][1]) for key in keys]
             lines.append(name + " & " + " & ".join(cells) + r" \\")
@@ -156,7 +158,7 @@ def llm_op_table(context: Mapping[str, Any]) -> str:
                  + r" \\")
     lines.append(r"\addlinespace[1.5pt]")
     for arm in ARMS:
-        lines.append(arm + " & " + " & ".join(llm_op_value(block["arms"][arm][key], percentile)
+        lines.append(DISPLAY.get(arm, arm) + " & " + " & ".join(llm_op_value(block["arms"][arm][key], percentile)
                                               for block in blocks for key, _, percentile in keys) + r" \\")
     lines += [r"\bottomrule", r"\end{tabular}"]
     return "\n".join(lines) + "\n"

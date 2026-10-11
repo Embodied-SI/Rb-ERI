@@ -4,7 +4,7 @@
 \begin{figure*}[t]
 \centering
 \input{figures/method}
-\caption{One frame of VSMT-lean. At inference the method reads only the front end's output and its own memory. Candidates and features are sealed (digests A and B, hashes of the tables) before any ground-truth file can be opened, so the offline teacher can label but not change them. Right: entity states; the map is the set of active and dormant entities, and a match reactivates a dormant entity (\op{REACTIVATE}).}
+\caption{One frame of Rb-ERI. At inference the method reads only the front end's output and its own memory. Candidates and features are sealed (digests A and B, hashes of the tables) before any ground-truth file can be opened, so the offline teacher can label but not change them. Right: entity states; the map is the set of active and dormant entities, and a match reactivates a dormant entity (\op{REACTIVATE}).}
 \label{fig:method}
 \end{figure*}
 
@@ -25,7 +25,7 @@ A fragment carries its back-projected 3D points, centroid and box, and an appear
 Visibility is tested on an entity's last seen surface (up to 64 sampled points per fragment of its latest observation): projected into the current depth image, a point is \emph{seen through} if the measured depth lies more than 5\,cm beyond it, \emph{on the surface} if within 5\,cm, and occluded if nearer.
 An entity \emph{should be visible} if at least one point in 64 is seen through or on the surface, and its \emph{free-space coverage} is the seen-through share: the old surface of a removed cup is seen through, while a hidden cup is occluded.
 \subsection{Recall and frame-level joint assignment}
-For each fragment $f$, recall unites a local channel (the $k{=}5$ entities with the highest descriptor cosine within 3\,m) and a global channel ($k'{=}3$, any distance, any state including retracted); because recall ignores the entity state, \arm{AssocOnly} receives the same far-away candidates as VSMT-lean.
+For each fragment $f$, recall unites a local channel (the $k{=}5$ entities with the highest descriptor cosine within 3\,m) and a global channel ($k'{=}3$, any distance, any state including retracted); because recall ignores the entity state, \arm{AssocOnly} receives the same far-away candidates as Rb-ERI.
 The cost matrix has a row per fragment and a column per recalled entity plus one \op{BIRTH} column per fragment,
 \begin{equation}
 C[f,e]=-a(f,e),\qquad C[f,\mathrm{birth}_f]=-b(f),
@@ -65,10 +65,10 @@ Every decision thus falls into exactly one class of a \emph{ledger}: \emph{recal
 \toprule
 Arm & What it is & Retract & Revive \\
 \midrule
-\textbf{VSMT-lean} & proposed: learned costs, hindsight labels & \checkmark & \checkmark \\
+\textbf{Rb-ERI} & proposed: learned costs, hindsight labels & \checkmark & \checkmark \\
 \addlinespace[1.5pt]
 \arm{AssocOnly} & same association head, only \op{BIND}/\op{BIRTH} & -- & -- \\
-\arm{NoVersion} & VSMT-lean's heads; retraction deletes & del. & -- \\
+\arm{NoVersion} & Rb-ERI's heads; retraction deletes & del. & -- \\
 \arm{HeuristicLabel} & same network, labels from \arm{ELU-P}'s decisions & \checkmark & \checkmark \\
 \arm{HandCost} & same solver, hand-written costs & \checkmark & \checkmark \\
 \addlinespace[1.5pt]

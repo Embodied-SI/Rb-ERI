@@ -1,6 +1,6 @@
 % Fig. 1 (page-1 overview), TikZ; included by sections/introduction.tex. Drawn by hand from docs/METHOD.md sections 3-4
 % and 11 (metric definitions); no data. A cup is moved from the table to the shelf while unseen: what a memory that only
-% binds and births (AssocOnly), one that deletes (NoVersion) and VSMT-lean can do, and what the two primary metrics score.
+% binds and births (AssocOnly), one that deletes (NoVersion) and Rb-ERI can do, and what the two primary metrics score.
 \begin{tikzpicture}[x=1mm, y=1mm, font=\scriptsize,
   furn/.style={draw=black!65, line width=0.55pt},
   cup/.style={draw=black!80, fill=orange!65, line width=0.3pt},
@@ -50,7 +50,7 @@
 % ---- memory rows
 \node[row] at (15.5, -20.6) {\arm{AssocOnly}\\[-1pt]\fontsize{6}{6.6}\selectfont keeps all};
 \node[row] at (15.5, -28.6) {\arm{NoVersion}\\[-1pt]\fontsize{6}{6.6}\selectfont deletes};
-\node[row] at (15.5, -36.6) {\textbf{VSMT-lean}\\[-1pt]\fontsize{6}{6.6}\selectfont retracts,\\[-1pt]\fontsize{6}{6.6}\selectfont reactivates};
+\node[row] at (15.5, -36.6) {\textbf{Rb-ERI}\\[-1pt]\fontsize{6}{6.6}\selectfont retracts,\\[-1pt]\fontsize{6}{6.6}\selectfont reactivates};
 % AssocOnly: the old entity stays (stale), the cup on the shelf gets a new identity
 \node[same] at (\Xa-4.4, -20) {$e_7$};
 \node[stale] at (\Xb-4.4, -20) {$e_7$};
@@ -64,7 +64,7 @@
 \node[note] at (\Xb-4.4, -31.5) {deleted};
 \node[newid] at (\Xc+4.4, -28) {$e_{12}$};
 \node[note] at (\Xc+4.4, -31.9) {\op{BIRTH}:\\[-1.5pt]new ID};
-% VSMT-lean: retraction closes a version, reactivation reopens the same identity at the new place
+% Rb-ERI: retraction closes a version, reactivation reopens the same identity at the new place
 \node[same] at (\Xa-4.4, -36) {$e_7$};
 \node[closed] at (\Xb-4.4, -36) {$e_7$};
 \node[note] at (\Xb-4.4, -39.9) {\op{RETRACT}: version\\[-1.5pt]closed, kept};

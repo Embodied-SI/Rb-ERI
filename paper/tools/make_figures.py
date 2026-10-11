@@ -6,7 +6,7 @@ Every plotted value is taken from the committed exports in ``results/``; no new 
   the original gate (against the strongest rule-based arm, reported only) as a dot plot. Dots are the seed-averaged
   advantages, bars the two-level two-sided 90% intervals (whose left end is the one-sided 95% lower bound used by the
   test), ticks the five per-seed paired differences.
-- ``comparisons.pdf`` (Fig. 4): VSMT-lean's advantage over the other eight arms on seven metrics in three panels
+- ``comparisons.pdf`` (Fig. 4): Rb-ERI's advantage over the other eight arms on seven metrics in three panels
   (ProcTHOR instance masks, ProcTHOR SAM 2.1, 3RScan instance masks), each cell shaded by its two-sided 90% interval
   (entirely above zero, entirely below zero, or including zero). Descriptive, not a test.
 Inputs: S3-05 statistics, S3-06 reanalysis (intervals), S3-07 external-check statistics; outputs: ``paper/figures/*.pdf``.
@@ -35,7 +35,7 @@ STATISTICS = "vsmt_lean_s3_05_statistics_8d58475.json"
 REANALYSIS = "vsmt_lean_s3_06_reanalysis_cd3ee83.json"
 EXTERNAL = "vsmt_lean_s3_07_statistics_aa94373.json"
 COMPARED = ("AssocOnly", "NoVersion", "HeuristicLabel", "HandCost", "TAF", "ELU-P", "RAC", "LOW")
-#: (metric key, column label, decimals) for the comparison matrix; advantages are signed so that > 0 favours VSMT-lean
+#: (metric key, column label, decimals) for the comparison matrix; advantages are signed so that > 0 favours Rb-ERI
 MATRIX_METRICS = (
     ("node_prf1", "F1", 3), ("missing_residual_rate", "MRR", 3), ("false_retract_rate_in_scope", "FRR$_\\mathrm{in}$", 3),
     ("identity_continuity", "IdC", 3), ("retrieval_success", "Retr.", 3), ("recovery_latency_frames", "Lat.", 1),
@@ -44,9 +44,9 @@ MATRIX_METRICS = (
 WIDTH_IN = 3.45  # one IEEE column
 FULL_WIDTH_IN = 7.16  # two IEEE columns
 INK, MUTED, GRID = "#222222", "#666666", "#d9d9d9"
-#: comparison-matrix fills: VSMT-lean better / other arm better (interval excludes zero) / interval includes zero / undefined
+#: comparison-matrix fills: Rb-ERI better / other arm better (interval excludes zero) / interval includes zero / undefined
 FILL = {"better": "#c6dbef", "worse": "#f6c9ad", "open": "#ffffff", "undefined": "#f0f0f0"}
-ACCENT = "#D55E00"  # VSMT-lean (Okabe-Ito vermillion)
+ACCENT = "#D55E00"  # Rb-ERI (Okabe-Ito vermillion)
 
 
 def load(name: str) -> Any:
@@ -59,8 +59,8 @@ def gate_figure(stats: Mapping[str, Any], reanalysis: Mapping[str, Any]) -> plt.
     The 90% interval is the exported two-sided two-level interval (S3-06 D3); its lower end must equal the one-sided 95%
     lower bound that the S3-05 test used, which is checked here so that the figure cannot drift from the test."""
 
-    panels = (("missing_residual_rate", "(a) Missing residual rate: reduction by VSMT-lean", (-0.1, 0.62), ("1", "2")),
-              ("identity_continuity", "(b) Identity continuity: gain by VSMT-lean", (-0.075, 0.25), ("1", "3")))
+    panels = (("missing_residual_rate", "(a) Missing residual rate: reduction by Rb-ERI", (-0.1, 0.62), ("1", "2")),
+              ("identity_continuity", "(b) Identity continuity: gain by Rb-ERI", (-0.075, 0.25), ("1", "3")))
     front_names = {"instance": "instance", "sam2": "SAM 2.1"}
     left, right = 0.335, 0.80
     figure, axes = plt.subplots(2, 1, figsize=(WIDTH_IN, 2.2))
@@ -103,7 +103,7 @@ def gate_figure(stats: Mapping[str, Any], reanalysis: Mapping[str, Any]) -> plt.
         axis.grid(True, axis="x", linewidth=0.3, color=GRID)
         for side in ("top", "right", "left"):
             axis.spines[side].set_visible(False)
-    axes[1].set_xlabel("Advantage of VSMT-lean (> 0 favours VSMT-lean)", fontsize=6.6, labelpad=1.5)
+    axes[1].set_xlabel("Advantage of Rb-ERI (> 0 favours Rb-ERI)", fontsize=6.6, labelpad=1.5)
     return figure
 
 
@@ -127,7 +127,7 @@ def cell_text(value: float, decimals: int) -> str:
 
 
 def comparisons_figure(reanalysis: Mapping[str, Any], external: Mapping[str, Any]) -> plt.Figure:
-    """VSMT-lean against every other arm, every metric, three data panels; cells coloured by the 90% interval."""
+    """Rb-ERI against every other arm, every metric, three data panels; cells coloured by the 90% interval."""
 
     panels = (
         ("(a) ProcTHOR test, instance masks", reanalysis["d3_intervals"]["instance"]),
@@ -161,7 +161,7 @@ def comparisons_figure(reanalysis: Mapping[str, Any], external: Mapping[str, Any
             side.set_visible(False)
     handles = [Rectangle((0, 0), 1, 1, facecolor=FILL[kind], edgecolor=MUTED, linewidth=0.4)
                for kind in ("better", "worse", "open", "undefined")]
-    labels = ["VSMT-lean better", "other arm better", "90% interval includes 0", "not defined (never retracts)"]
+    labels = ["Rb-ERI better", "other arm better", "90% interval includes 0", "not defined (never retracts)"]
     figure.legend(handles, labels, loc="lower center", ncol=4, fontsize=6.6, frameon=False, handlelength=1.4,
                   bbox_to_anchor=(0.55, -0.015), columnspacing=2.2)
     return figure

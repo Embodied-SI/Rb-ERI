@@ -26,8 +26,8 @@ This centroid rule is primary because an entity's box comes from one frame's dep
 We also report memory size; runtime was measured under uncontrolled load and is not compared.
 
 \subsection{Selection}
-Each arm has at most 12 registered configurations (e.g.\ VSMT-lean's threshold $\tau_r$, \arm{TAF}'s similarity threshold and distance gate) and chooses one per front end on validation by node F1 (learned arms: mean over seeds), so the primary metrics are never the selection objective.
-The six arms that can retract choose only among configurations whose validation MRR is below \arm{AssocOnly}'s, so that selection cannot favour retracting too little; all six satisfied this (VSMT-lean: 0.176 against 0.727 with instance masks), and VSMT-lean selected $\tau_r=0.8$ with instance masks and $0.25$ with SAM~2.1 (\arm{NoVersion}: 0.9 and 0.25).
+Each arm has at most 12 registered configurations (e.g.\ Rb-ERI's threshold $\tau_r$, \arm{TAF}'s similarity threshold and distance gate) and chooses one per front end on validation by node F1 (learned arms: mean over seeds), so the primary metrics are never the selection objective.
+The six arms that can retract choose only among configurations whose validation MRR is below \arm{AssocOnly}'s, so that selection cannot favour retracting too little; all six satisfied this (Rb-ERI: 0.176 against 0.727 with instance masks), and Rb-ERI selected $\tau_r=0.8$ with instance masks and $0.25$ with SAM~2.1 (\arm{NoVersion}: 0.9 and 0.25).
 \arm{ELU-P} and \arm{RAC} selected the end of their grids in three parameters on both front ends, \arm{TAF} and \arm{HandCost} in one or two, and \arm{NoVersion} in one with instance masks; the grids were not widened after the test, although a wider grid might lower \arm{ELU-P}'s MRR further.
 
 \subsection{Statistics and the primary hypothesis}
@@ -38,14 +38,14 @@ The target of inference is the training procedure (fixed training data, recipe a
 A comparison \emph{holds} if the one-sided 95\% lower bound of the seed-averaged advantage (the lower end of the two-sided 90\% interval) is above zero and a \emph{seed-stability} condition holds: all five seeds present, at least four of five paired differences favourable, and their mean larger than their standard deviation.
 With five seeds the bound has no coverage guarantee; in a simulation that resampled development and confirmation houses with no true difference and seed noise of standard deviation 0 to 0.10, this rule passed falsely 1.6--5.8\% of the time against a nominal 5\%, whereas resampling houses only reached 17--33\% across the simulated settings at 0.10.
 
-The primary hypothesis is that VSMT-lean improves on \arm{AssocOnly} in both MRR and IdC, tested in a fixed order, each step only if the previous one holds: (1) instance masks, both metrics; (2) SAM~2.1, MRR; (3) SAM~2.1, IdC.
+The primary hypothesis is that Rb-ERI improves on \arm{AssocOnly} in both MRR and IdC, tested in a fixed order, each step only if the previous one holds: (1) instance masks, both metrics; (2) SAM~2.1, MRR; (3) SAM~2.1, IdC.
 Because selection already keeps the retracting arms' validation MRR below \arm{AssocOnly}'s, a lower test MRR mainly checks that this carries over to unseen houses; IdC is used by no selection rule.
 No margin was registered below which a loss in node F1 would count as acceptable, so for node F1 we report the difference and interval only.
 All other comparisons are descriptive (difference and two-sided 90\% interval, no gate, no correction for multiplicity).
 
 \textbf{Disclosure.}
 A registered pass/fail rule for a claim is a \emph{gate}.
-The original gate required VSMT-lean to beat the strongest rule-based arm on each metric, chosen per metric on the test data itself, which makes it conservative (\arm{ELU-P} for MRR, \arm{TAF} for IdC).
+The original gate required Rb-ERI to beat the strongest rule-based arm on each metric, chosen per metric on the test data itself, which makes it conservative (\arm{ELU-P} for MRR, \arm{TAF} for IdC).
 It was not met on development and confirmation data, and the primary hypothesis was revised to the comparison with \arm{AssocOnly}, the counterfactual for the lifecycle vocabulary, after those readings and before any validation or test data were read.
 The fixed order was designed after reading development results with SAM~2.1 masks, and identity continuity was then redefined over the same events for every arm (previously only events with a carrier counted, now the conditional column); both were frozen before validation and test.
 We report the original gate with the same lists and rules (Fig.~\ref{fig:gate}).

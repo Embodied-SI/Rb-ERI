@@ -50,10 +50,10 @@ locally, never edited on Overleaf.
 |---|---|
 | `main.tex` | IEEEtran journal class, version switch, `\input` of each section |
 | `sections/*.tex` | abstract, introduction, related work, method, protocol, results, limitations, conclusion; acknowledgment with the generative-AI disclosure (final version only) |
-| `figures/overview.tex` | Fig. 1: one object moved while unobserved, the outcome under AssocOnly, NoVersion and VSMT-lean, and what MRR and IdC count (TikZ illustration, no data) |
-| `figures/method.tex` | Fig. 2: one frame of VSMT-lean with seals A and B, the offline teacher and the entity states (TikZ; the only number is the parameter count 54,787) |
+| `figures/overview.tex` | Fig. 1: one object moved while unobserved, the outcome under AssocOnly, NoVersion and Rb-ERI, and what MRR and IdC count (TikZ illustration, no data) |
+| `figures/method.tex` | Fig. 2: one frame of Rb-ERI with seals A and B, the offline teacher and the entity states (TikZ; the only number is the parameter count 54,787) |
 | `figures/gate.pdf` | Fig. 3: the fixed-order test and the original gate (generated; S3-05 `primary_gate` / `original_gate`, S3-06 `d3_intervals`; the script checks that each interval's left end equals the one-sided lower bound used by the test) |
-| `figures/comparisons.pdf` | Fig. 4: VSMT-lean's advantage over the other eight arms on seven metrics, ProcTHOR (two front ends) and 3RScan (generated; S3-06 `d3_intervals`, S3-07 `comparisons`) |
+| `figures/comparisons.pdf` | Fig. 4: Rb-ERI's advantage over the other eight arms on seven metrics, ProcTHOR (two front ends) and 3RScan (generated; S3-06 `d3_intervals`, S3-07 `comparisons`) |
 | `tables/main.tex` | Table II: test results (generated; do not edit) |
 | `tables/llm_op.tex` | Table III: LLM-op and the other arms on one validation episode (generated; do not edit) |
 | Table I in `sections/method.tex` | the nine arms, one line each (hand-written, no data) |
