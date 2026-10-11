@@ -3,7 +3,7 @@
 > Name: Rb-ERI (Retraction-based Entity Re-Identification) is the name of the method since 2026-10-11 (decision
 > D-224-NAME). Code identifiers, configuration keys, result files, the Hugging Face release and records written
 > before that date keep the earlier name VSMT-lean (arm key `VSMT-lean`, modules `src/vsmt/`, package `vsmt_memory`,
-> result files `vsmt_lean_*`).
+> result files `vsmt_lean_*`); the README section [Naming](../README.md#naming-rb-eri-and-vsmt-lean) explains why.
 
 This file maintains only the step chain, dependencies, status, deliverables and failure branches of Rb-ERI (Retraction-based Entity Re-Identification; versioned entity-lifecycle transactions, D-224; registered as VSMT-lean), from the current code to the paper results. The earlier VM-00 to VM-06 plan, CPMT, the spatial world model and the place-layer route are archived on branch `archive/pre-d224-unified-graph` (local branch, to be published; the CPMT and spatial-world-model code is on `archive/cpmt-m1-20260917` and `archive/spatial-world-model-20260917`) and are not listed here. Method definitions are in [METHOD.md](METHOD.md), fields in [DATA.md](DATA.md), the rationale for decisions in [DECISIONS.md](DECISIONS.md), and run evidence in [EXECUTE.md](../EXECUTE.md). This file **does not switch the research claim automatically**: any alternative route that would change what the paper claims must first pause and report the evidence, and is then written up as a new decision for the user's approval.
 

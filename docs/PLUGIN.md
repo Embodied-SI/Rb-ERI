@@ -3,7 +3,7 @@
 > Name: Rb-ERI (Retraction-based Entity Re-Identification) is the name of the method since 2026-10-11 (decision
 > D-224-NAME). Code identifiers, configuration keys, result files, the Hugging Face release and records written
 > before that date keep the earlier name VSMT-lean (arm key `VSMT-lean`, modules `src/vsmt/`, package `vsmt_memory`,
-> result files `vsmt_lean_*`).
+> result files `vsmt_lean_*`); the README section [Naming](../README.md#naming-rb-eri-and-vsmt-lean) explains why.
 
 The package [`vsmt_memory/`](../vsmt_memory/) wraps the object-level memory of the paper (entity records, recall,
 frame-level joint assignment, existence decisions and the versioned executor) for any RGB-D stream with camera poses

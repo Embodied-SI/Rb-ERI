@@ -17,6 +17,7 @@ Paper source: [paper/](paper/)
 | regenerate the data and retrain, stage by stage | [docs/REPRODUCE.md, section 11](docs/REPRODUCE.md#11-full-pipeline-from-procthor-10k) |
 | use the Rb-ERI memory on my own RGB-D stream (robot, dataset) | [Use the Rb-ERI memory in your own system](#use-the-rb-eri-memory-in-your-own-system) below · [docs/PLUGIN.md](docs/PLUGIN.md) |
 | understand the method, data and admissible claims | [docs/METHOD.md](docs/METHOD.md) · [docs/DATA.md](docs/DATA.md) |
+| know why code and files say VSMT | [Naming: Rb-ERI and VSMT-lean](#naming-rb-eri-and-vsmt-lean) below |
 
 ## Overview
 
@@ -26,9 +27,8 @@ hidden, missed by the detector, removed or moved, and it must re-identify object
 transaction; a retraction closes an entity's version instead of deleting it, so the entity can later be reactivated
 under its old identity. Places and relations are not revised in this work.
 
-The name Rb-ERI is used since 2026-10-11 (docs/DECISIONS.md, D-224-NAME). Code identifiers, configuration keys,
-result files, the Hugging Face release and records written before that date keep the earlier name VSMT-lean: arm
-key `VSMT-lean`, modules `src/vsmt/`, package `vsmt_memory`, result files `vsmt_lean_*`.
+Rb-ERI was developed under the name VSMT-lean, which the code, result files and records still use; see
+[Naming](#naming-rb-eri-and-vsmt-lean).
 
 | Operation | Effect |
 |---|---|
@@ -61,6 +61,32 @@ published mechanisms, not official reproductions). Data are procedurally generat
 changes made during an unobserved window. The primary hypothesis (revised after development and confirmation
 readings), the testing order and the statistics were registered internally before validation or test data were read,
 and the test was run once.
+
+## Naming: Rb-ERI and VSMT-lean
+
+The method was developed, registered and evaluated under the name **VSMT-lean**, the lean core of Versioned
+Structural Memory Transactions (VSMT), an earlier and broader design that also revised places and relations. At the
+paper stage (2026-10-11, decision D-224-NAME in [docs/DECISIONS.md](docs/DECISIONS.md)) it was renamed **Rb-ERI**,
+Retraction-based Entity Re-Identification, a name for its core technique: a retraction closes an entity's version
+instead of deleting it, so a later observation can reactivate the same identity.
+
+The rename changes names only, not code behaviour or any result. Everything produced during development keeps the
+development name, because its bytes are bound by SHA-256 digests in the stage manifests, the freeze receipt and the
+release manifests, and reproducing the paper means comparing against exactly those files:
+
+| Where | Name |
+|---|---|
+| paper, README and docs, Hugging Face cards, code comments and docstrings | Rb-ERI |
+| what `reproduce/` writes (L0 and L1 reports, `rb_eri_*` files) | Rb-ERI |
+| plug-in class | `RbERIMemory`, the same class as `VSMTMemory` |
+| arm key in configurations, code and result files | `VSMT-lean` |
+| modules, package and environment variables | `src/vsmt/`, `ops/vsmt/`, `vsmt_memory`, `VSMT_*` |
+| committed results and released data | `results/vsmt_lean_*.json`, archive paths `…/VSMT-lean/…` |
+| tag `paper-v1`, EXECUTE and DECISIONS entries written before the rename | VSMT-lean |
+
+Wherever both names appear, `VSMT-lean` means Rb-ERI. The registered but never-run variant `VSMT-lean-ctx` keeps its
+name. The repositories were renamed at the same time: GitHub `JingzeSun/VSMT` became `Embodied-SI/Rb-ERI`, and the
+Hugging Face repositories `Jsun0632/vsmt-lean*` became `Embodied-SI/Rb-ERI*`; the old addresses redirect.
 
 ## Main results
 

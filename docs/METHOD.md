@@ -3,7 +3,7 @@
 > Name: Rb-ERI (Retraction-based Entity Re-Identification) is the name of the method since 2026-10-11 (decision
 > D-224-NAME). Code identifiers, configuration keys, result files, the Hugging Face release and records written
 > before that date keep the earlier name VSMT-lean (arm key `VSMT-lean`, modules `src/vsmt/`, package `vsmt_memory`,
-> result files `vsmt_lean_*`).
+> result files `vsmt_lean_*`); the README section [Naming](../README.md#naming-rb-eri-and-vsmt-lean) explains why.
 
 > This file defines only the method of the current first paper: **Rb-ERI (Retraction-based Entity Re-Identification), versioned entity-lifecycle transactions; it was registered as VSMT-lean, the lean version of Versioned Structural Memory Transactions**. The method texts of the earlier CPMT, the spatial world model (D-062), the two-layer place memory (D-210), the unified four-type graph (D-213), and the eight-atom candidate enumeration with structure estimators (D-214–D-223) are archived with the branch `archive/pre-d224-unified-graph` and are not repeated here; read them from that branch or from the Git history when needed.
 >

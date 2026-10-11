@@ -3,7 +3,7 @@
 > Name: Rb-ERI (Retraction-based Entity Re-Identification) is the name of the method since 2026-10-11 (decision
 > D-224-NAME). Code identifiers, configuration keys, result files, the Hugging Face release and records written
 > before that date keep the earlier name VSMT-lean (arm key `VSMT-lean`, modules `src/vsmt/`, package `vsmt_memory`,
-> result files `vsmt_lean_*`).
+> result files `vsmt_lean_*`); the README section [Naming](../README.md#naming-rb-eri-and-vsmt-lean) explains why.
 
 > This file defines only the data of Rb-ERI (Retraction-based Entity Re-Identification, i.e. versioned entity-lifecycle transactions; decision D-224; registered as VSMT-lean, the lean version of Versioned Structural Memory Transactions): sources, splits, generation rules, the three read surfaces, fields, labels, evaluation files and leakage checks, and the external-validation data of stage S3-07. The data protocols of the earlier VM-04 versions, the D-210 place route and the SH/R4 physical data contracts are archived with the branch `archive/pre-d224-unified-graph`.
 >
