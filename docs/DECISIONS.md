@@ -3393,3 +3393,10 @@
     `Jsun0632/vsmt-lean*` identifiers.
 - **Effect.** No number, claim, rule, contract, configuration or code behaviour changes. The venue question raised by
   the SCI-template draft (rulings 83-6 and 113-4) is not decided here.
+- **Executed (2026-10-11).** The user created the Hugging Face organization Embodied-SI and renamed the repositories:
+  `Jsun0632/vsmt-lean` -> `Embodied-SI/Rb-ERI` (model) and `vsmt-lean-s3-{eval,records,train}` ->
+  `Embodied-SI/Rb-ERI-s3-{eval,records,train}` (datasets); the five cited revisions resolve under the new names and
+  the old addresses redirect. Commits: documentation 0020c90, paper c4c8da9, code comments f5e6c98 (syntax trees
+  unchanged, 1,423 tests OK), Hugging Face references 90d8e39 (the release tooling, its tests and the manifests under
+  `results/` keep the old identifiers), plug-in alias 6a1128e. The card upload waits for a valid local Hugging Face
+  login (the stored token was rejected); the published cards keep the old wording until then.
