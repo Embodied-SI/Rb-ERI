@@ -206,11 +206,15 @@ The data, weights and records behind the paper are released in four independentl
 
 | Layer | Repository | Content | Revision cited in the paper | Check |
 |---|---|---|---|---|
-| T0 | [`Jsun0632/vsmt-lean`](https://huggingface.co/Jsun0632/vsmt-lean) (model) | results and weights: round-1 weights of both front ends, all exports (including S3-07), the S3-04 freeze directory, ReID heads | `0b2ce7f8bb5de862fd500f10b23e55ba4eebf372` | `results/vsmt_lean_hf_release_T0_2d179b9.json`, `verify`: 699 items, `pass` |
-| T1 | [`Jsun0632/vsmt-lean-s3-eval`](https://huggingface.co/datasets/Jsun0632/vsmt-lean-s3-eval) (dataset) | validation and test: raw episodes, geometry, instance and SAM 2.1 caches | `1bb81d27554d3795439172c418dc1416bff0c56e` | `results/vsmt_lean_hf_release_T1_2d179b9.json`, `verify`: 582 items, `pass` |
-| T2 | [`Jsun0632/vsmt-lean-s3-records`](https://huggingface.co/datasets/Jsun0632/vsmt-lean-s3-records) (dataset) | training and audit records (S3-03 and S3-05 run roots) | `1d45b57add4a89f4586a4b128a0cc7d1a81721c8` | `results/vsmt_lean_hf_release_T2_2d179b9.json`, `verify`: 33 items, `pass` |
-| T3 | [`Jsun0632/vsmt-lean-s3-train`](https://huggingface.co/datasets/Jsun0632/vsmt-lean-s3-train) (dataset) | training inputs: train raw episodes, geometry, both caches | `d0396685929460b65496883b6007df5f6f23c0c9` | `results/vsmt_lean_hf_release_T3_2d179b9.json`, `verify`: 1,113 items, `pass` |
-| T0 addendum | [`Jsun0632/vsmt-lean`](https://huggingface.co/Jsun0632/vsmt-lean) (model) | the instance-mask ReID head and the salt of ruling 37, listed in `MANIFEST_ADDENDUM.json` | `1fc9efe87f990ce0e9cacced7187eda5d97e139b` (after the paper) | `results/vsmt_lean_hf_release_T0_addendum_1fc9efe.json`: both files, their payload or stripped-text digests and the card checked after download |
+| T0 | [`Embodied-SI/Rb-ERI`](https://huggingface.co/Embodied-SI/Rb-ERI) (model) | results and weights: round-1 weights of both front ends, all exports (including S3-07), the S3-04 freeze directory, ReID heads | `0b2ce7f8bb5de862fd500f10b23e55ba4eebf372` | `results/vsmt_lean_hf_release_T0_2d179b9.json`, `verify`: 699 items, `pass` |
+| T1 | [`Embodied-SI/Rb-ERI-s3-eval`](https://huggingface.co/datasets/Embodied-SI/Rb-ERI-s3-eval) (dataset) | validation and test: raw episodes, geometry, instance and SAM 2.1 caches | `1bb81d27554d3795439172c418dc1416bff0c56e` | `results/vsmt_lean_hf_release_T1_2d179b9.json`, `verify`: 582 items, `pass` |
+| T2 | [`Embodied-SI/Rb-ERI-s3-records`](https://huggingface.co/datasets/Embodied-SI/Rb-ERI-s3-records) (dataset) | training and audit records (S3-03 and S3-05 run roots) | `1d45b57add4a89f4586a4b128a0cc7d1a81721c8` | `results/vsmt_lean_hf_release_T2_2d179b9.json`, `verify`: 33 items, `pass` |
+| T3 | [`Embodied-SI/Rb-ERI-s3-train`](https://huggingface.co/datasets/Embodied-SI/Rb-ERI-s3-train) (dataset) | training inputs: train raw episodes, geometry, both caches | `d0396685929460b65496883b6007df5f6f23c0c9` | `results/vsmt_lean_hf_release_T3_2d179b9.json`, `verify`: 1,113 items, `pass` |
+| T0 addendum | [`Embodied-SI/Rb-ERI`](https://huggingface.co/Embodied-SI/Rb-ERI) (model) | the instance-mask ReID head and the salt of ruling 37, listed in `MANIFEST_ADDENDUM.json` | `1fc9efe87f990ce0e9cacced7187eda5d97e139b` (after the paper) | `results/vsmt_lean_hf_release_T0_addendum_1fc9efe.json`: both files, their payload or stripped-text digests and the card checked after download |
+
+The four repositories were renamed from `Jsun0632/vsmt-lean*` and moved to the Embodied-SI organization on
+2026-10-11 (decision D-224-NAME); the old addresses redirect, the revisions are unchanged, and the release manifests
+under `results/` record the old identifiers.
 
 Later commits on these repositories only add the cards (`README.md`) and the licence file, except the T0 addendum,
 which adds two files and changes none; `hf_fetch.py` does not list them, `reproduce/fetch_extras.py` fetches them.
@@ -230,7 +234,7 @@ what is restored (`--deep` recomputes every digest).
 Download and restore (any machine), for example the validation instance cache:
 
 ```bash
-python ops/vsmt/hf_fetch.py --repo Jsun0632/vsmt-lean-s3-eval --repo-type dataset --revision 1bb81d27554d3795439172c418dc1416bff0c56e --select validation/instance_cache/ --dest /root/autodl-tmp
+python ops/vsmt/hf_fetch.py --repo Embodied-SI/Rb-ERI-s3-eval --repo-type dataset --revision 1bb81d27554d3795439172c418dc1416bff0c56e --select validation/instance_cache/ --dest /root/autodl-tmp
 ```
 
 Release (maintainers only; server B1, after `hf auth login`; the script sources `/etc/network_turbo` itself; rerunning

@@ -2,7 +2,7 @@
 
 Code, configurations, result exports and paper source for the manuscript *Versioned Lifecycle Transactions for
 Object-Level Spatial Memory: A Pre-Registered Evaluation Under Unobserved Changes* (under review).
-Weights and data: [Hugging Face, Jsun0632](https://huggingface.co/Jsun0632) ·
+Weights and data: [Hugging Face, Embodied-SI](https://huggingface.co/Embodied-SI) ·
 Reproduction guide: [docs/REPRODUCE.md](docs/REPRODUCE.md) · Memory plug-in: [docs/PLUGIN.md](docs/PLUGIN.md) ·
 Paper source: [paper/](paper/)
 
@@ -170,16 +170,20 @@ which decided the no-change draw and is needed to regenerate the data; `uv run p
 
 | Layer | Repository | Content | Revision |
 |---|---|---|---|
-| T0 | [`Jsun0632/vsmt-lean`](https://huggingface.co/Jsun0632/vsmt-lean) | results and weights | `0b2ce7f8bb5d` |
-| T1 | [`Jsun0632/vsmt-lean-s3-eval`](https://huggingface.co/datasets/Jsun0632/vsmt-lean-s3-eval) | validation and test inputs | `1bb81d27554d` |
-| T2 | [`Jsun0632/vsmt-lean-s3-records`](https://huggingface.co/datasets/Jsun0632/vsmt-lean-s3-records) | training and audit records | `1d45b57add4a` |
-| T3 | [`Jsun0632/vsmt-lean-s3-train`](https://huggingface.co/datasets/Jsun0632/vsmt-lean-s3-train) | training inputs | `d03966859294` |
-| T0 addendum | [`Jsun0632/vsmt-lean`](https://huggingface.co/Jsun0632/vsmt-lean) | instance-mask ReID head, salt of ruling 37 | `1fc9efe87f99` (after the paper) |
+| T0 | [`Embodied-SI/Rb-ERI`](https://huggingface.co/Embodied-SI/Rb-ERI) | results and weights | `0b2ce7f8bb5d` |
+| T1 | [`Embodied-SI/Rb-ERI-s3-eval`](https://huggingface.co/datasets/Embodied-SI/Rb-ERI-s3-eval) | validation and test inputs | `1bb81d27554d` |
+| T2 | [`Embodied-SI/Rb-ERI-s3-records`](https://huggingface.co/datasets/Embodied-SI/Rb-ERI-s3-records) | training and audit records | `1d45b57add4a` |
+| T3 | [`Embodied-SI/Rb-ERI-s3-train`](https://huggingface.co/datasets/Embodied-SI/Rb-ERI-s3-train) | training inputs | `d03966859294` |
+| T0 addendum | [`Embodied-SI/Rb-ERI`](https://huggingface.co/Embodied-SI/Rb-ERI) | instance-mask ReID head, salt of ruling 37 | `1fc9efe87f99` (after the paper) |
+
+The four repositories were renamed from `Jsun0632/vsmt-lean*` and moved to the Embodied-SI organization on
+2026-10-11 (decision D-224-NAME); the old addresses redirect, the revisions are unchanged, and the release manifests
+under `results/` record the old identifiers.
 
 For example, to fetch the validation instance-mask cache:
 
 ```bash
-uv run python ops/vsmt/hf_fetch.py --repo Jsun0632/vsmt-lean-s3-eval --repo-type dataset --revision 1bb81d27554d3795439172c418dc1416bff0c56e --select validation/instance_cache/ --dest /root/autodl-tmp
+uv run python ops/vsmt/hf_fetch.py --repo Embodied-SI/Rb-ERI-s3-eval --repo-type dataset --revision 1bb81d27554d3795439172c418dc1416bff0c56e --select validation/instance_cache/ --dest /root/autodl-tmp
 ```
 
 Full revisions, manifests and verification are described in

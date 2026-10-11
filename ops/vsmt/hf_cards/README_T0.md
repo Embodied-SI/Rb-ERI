@@ -29,7 +29,7 @@ pinned revision, checks every sha256, extracts each tar safely, recomputes the t
 under a base directory (default `/root/autodl-tmp`) so the repository's scripts run unchanged:
 
 ```bash
-python ops/vsmt/hf_fetch.py --repo Jsun0632/vsmt-lean --repo-type model --revision <commit> --select weights/instance/ --dest /root/autodl-tmp
+python ops/vsmt/hf_fetch.py --repo Embodied-SI/Rb-ERI --repo-type model --revision <commit> --select weights/instance/ --dest /root/autodl-tmp
 ```
 
 Each episode directory is one deterministic, uncompressed tar (members sorted by path, mtime 0, owner 0/0, modes 644/755,
@@ -65,6 +65,6 @@ The paper cites revision `0b2ce7f8bb5d`. One later commit adds three files and c
 No 3RScan data is redistributed in this repository or in any other tier of this release: no scans, renderings,
 annotations, ground truth or features computed on its frames. The 3RScan Terms of Use allow non-commercial research use
 and grant no right to publish or redistribute the data. The external validation on 3RScan (S3-07) is published only as
-per-scene metrics and counts (`exports/vsmt_lean_s3_07_*.json` in `Jsun0632/vsmt-lean`); to reproduce it, request 3RScan
+per-scene metrics and counts (`exports/vsmt_lean_s3_07_*.json` in `Embodied-SI/Rb-ERI`); to reproduce it, request 3RScan
 access from TUM and rebuild the inputs with the conversion and rendering code in the code repository (branch
 `s3-07-impl`, `ops/vsmt/s3_07_*.py`).

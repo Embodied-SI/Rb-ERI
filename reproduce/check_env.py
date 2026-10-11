@@ -38,10 +38,10 @@ from _common import FREEZE_COMMIT, PAPER_TAG, REPO_ROOT, S3_05_RUN_COMMIT, git, 
 LEVELS = ("L0", "L1", "L2", "L3", "full", "plugin")
 RELEASE_MANIFESTS = {layer: REPO_ROOT / "results" / f"vsmt_lean_hf_release_{layer}_2d179b9.json"
                      for layer in ("T0", "T1", "T2", "T3")}
-HF_REVISIONS = {"T0": ("Jsun0632/vsmt-lean", "model", "0b2ce7f8bb5de862fd500f10b23e55ba4eebf372"),
-                "T1": ("Jsun0632/vsmt-lean-s3-eval", "dataset", "1bb81d27554d3795439172c418dc1416bff0c56e"),
-                "T2": ("Jsun0632/vsmt-lean-s3-records", "dataset", "1d45b57add4a89f4586a4b128a0cc7d1a81721c8"),
-                "T3": ("Jsun0632/vsmt-lean-s3-train", "dataset", "d0396685929460b65496883b6007df5f6f23c0c9")}
+HF_REVISIONS = {"T0": ("Embodied-SI/Rb-ERI", "model", "0b2ce7f8bb5de862fd500f10b23e55ba4eebf372"),
+                "T1": ("Embodied-SI/Rb-ERI-s3-eval", "dataset", "1bb81d27554d3795439172c418dc1416bff0c56e"),
+                "T2": ("Embodied-SI/Rb-ERI-s3-records", "dataset", "1d45b57add4a89f4586a4b128a0cc7d1a81721c8"),
+                "T3": ("Embodied-SI/Rb-ERI-s3-train", "dataset", "d0396685929460b65496883b6007df5f6f23c0c9")}
 INSTANCE_REID = "vsmt_private/lean-s1-04-diagnostics-oracle-caa50c7/reid_head_vitb14.json"
 INSTANCE_REID_SHA256 = "27bf6a10767f68c3b7aef6e76f91e48c9bea8de6750cfb8620e16e0c388217e0"
 ASSET_KEYS = {"sam2_repository": None, "sam2_checkpoint": "sam2_checkpoint", "dinov2_repository": None,
@@ -236,7 +236,7 @@ def check(levels: set[str], root: Path, deep: bool) -> list[Row]:
                         "dinov2_vits14_checkpoint and dinov2_vitb14_checkpoint to paths (docs/REPRODUCE.md section 11)"))
         for name, variable, relative, source_name, fix in (
                 ("SAM 2.1 ReID head", "SAM2_REID", "vsmt_private/exports/reid_head_vitb14_154776d.json", "sam2",
-                 f"python ops/vsmt/hf_fetch.py --repo Jsun0632/vsmt-lean --repo-type model --revision "
+                 f"python ops/vsmt/hf_fetch.py --repo Embodied-SI/Rb-ERI --repo-type model --revision "
                  f"0b2ce7f8bb5de862fd500f10b23e55ba4eebf372 --select reid/ --dest {autodl}"),
                 ("instance-mask ReID head", "INSTANCE_REID", INSTANCE_REID, "simulator_instance_masks",
                  f"python reproduce/fetch_extras.py --dest {autodl} --only reid (T0 addendum)")):

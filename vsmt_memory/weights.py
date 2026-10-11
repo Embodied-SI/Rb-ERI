@@ -18,7 +18,7 @@ from typing import Any
 
 from . import _repo
 
-T0_REPOSITORY = "Jsun0632/vsmt-lean"
+T0_REPOSITORY = "Embodied-SI/Rb-ERI"
 T0_REVISION = "0b2ce7f8bb5de862fd500f10b23e55ba4eebf372"
 T0_MANIFEST = _repo.RESULTS_DIR / "vsmt_lean_hf_release_T0_2d179b9.json"
 T0_ADDENDUM = _repo.RESULTS_DIR / "vsmt_lean_hf_release_T0_addendum_1fc9efe.json"

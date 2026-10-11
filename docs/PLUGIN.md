@@ -53,7 +53,7 @@ files already in a cache are used without network access:
 
 | What | Size | From |
 |---|---|---|
-| cost heads and ReID head | 100 MB | Hugging Face [`Jsun0632/vsmt-lean`](https://huggingface.co/Jsun0632/vsmt-lean), revision `0b2ce7f8bb5d` (the instance-mask ReID head: `1fc9efe87f99`, added after the paper) |
+| cost heads and ReID head | 100 MB | Hugging Face [`Embodied-SI/Rb-ERI`](https://huggingface.co/Embodied-SI/Rb-ERI), revision `0b2ce7f8bb5d` (the instance-mask ReID head: `1fc9efe87f99`, added after the paper) |
 | DINOv2 ViT-B/14 checkpoint | 346 MB | `dl.fbaipublicfiles.com`, the file the paper's front end used |
 | DINOv2 model code | 1 MB | `torch.hub` at commit `7764ea0f` of `facebookresearch/dinov2` (or pass a local clone) |
 | SAM 2.1 Hiera Small (optional) | 184 MB | `dl.fbaipublicfiles.com`; needs the `sam2` package (the paper used commit `2b90b9f5`) |
@@ -193,7 +193,7 @@ python -m unittest discover -s vsmt_memory/tests -t .
   layer T1 (160 MB); `<data root>` is any directory, given both to the download and to the example:
 
   ```bash
-  python ops/vsmt/hf_fetch.py --repo Jsun0632/vsmt-lean-s3-eval --repo-type dataset --revision 1bb81d27554d3795439172c418dc1416bff0c56e --dest <data root> --select validation/raw/procthor10k-0.1.2-train-02318.tar validation/sam2_cache/procthor10k-0.1.2-train-02318.tar
+  python ops/vsmt/hf_fetch.py --repo Embodied-SI/Rb-ERI-s3-eval --repo-type dataset --revision 1bb81d27554d3795439172c418dc1416bff0c56e --dest <data root> --select validation/raw/procthor10k-0.1.2-train-02318.tar validation/sam2_cache/procthor10k-0.1.2-train-02318.tar
   ```
 - [`examples/synthetic_scene.py`](../vsmt_memory/examples/synthetic_scene.py): a ray-cast room in the ROS convention at
   320 x 240; one box is removed and one moved between two turns of the camera. It prints what became of both boxes.

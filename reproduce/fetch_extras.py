@@ -2,7 +2,7 @@
 
     python reproduce/fetch_extras.py --dest <data root> [--only reid|salt]
 
-Both files are in Hugging Face layer T0 (``Jsun0632/vsmt-lean``) at revision ``1fc9efe8``, listed in
+Both files are in Hugging Face layer T0 (``Embodied-SI/Rb-ERI``) at revision ``1fc9efe8``, listed in
 ``MANIFEST_ADDENDUM.json`` there and recorded in ``results/vsmt_lean_hf_release_T0_addendum_1fc9efe.json``.  Each is
 downloaded at that revision, checked (size and SHA-256 of the file; the ReID head's payload digest, which the code pins;
 the salt's stripped-text digest, which the generator pins) and written to its restore path under ``--dest``, the same

@@ -5,7 +5,7 @@ Downloads one tier, or part of it (e.g. only the validation instance cache), che
 unpacks the tar and recomputes the directory-tree digest; an item is restored only if both equal the manifest (the one that
 was checked against the seal and the S3-02 exports at upload). Items are restored at their original relative paths on B1
 (default root /root/autodl-tmp), so the repository's scripts run without path changes. Example:
-  python ops/vsmt/hf_fetch.py --repo Jsun0632/vsmt-lean-s3-eval --repo-type dataset --revision <commit> --select validation/instance_cache/
+  python ops/vsmt/hf_fetch.py --repo Embodied-SI/Rb-ERI-s3-eval --repo-type dataset --revision <commit> --select validation/instance_cache/
 restores every episode under vsmt_caches/s3-02-instance-3f6ef1d/validation/. Items already restored and matching are
 skipped; any mismatch stops with exit 3.
 

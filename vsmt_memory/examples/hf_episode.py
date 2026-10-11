@@ -7,7 +7,7 @@ episode's sealed cache through the same memory and reports whether both paths co
 
 Data: one validation episode from Hugging Face layer T1 (about 160 MB) and the weights from T0 (about 100 MB):
 
-    python ops/vsmt/hf_fetch.py --repo Jsun0632/vsmt-lean-s3-eval --repo-type dataset \\
+    python ops/vsmt/hf_fetch.py --repo Embodied-SI/Rb-ERI-s3-eval --repo-type dataset \\
         --revision 1bb81d27554d3795439172c418dc1416bff0c56e --dest <data root> \\
         --select validation/raw/procthor10k-0.1.2-train-02318.tar validation/sam2_cache/procthor10k-0.1.2-train-02318.tar
     python -m vsmt_memory.examples.hf_episode --data-root <data root>
