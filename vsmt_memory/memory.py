@@ -266,4 +266,7 @@ class VSMTMemory:
                            dropped_masks=built.dropped_masks, illegal_program=receipt["illegal_program"])
 
 
-__all__ = ["EntityRecord", "FrameResult", "Operation", "VSMTMemory", "entity_records", "frozen_policy"]
+#: The class under the method's name since decision D-224-NAME; ``VSMTMemory`` stays for existing imports.
+RbERIMemory = VSMTMemory
+
+__all__ = ["EntityRecord", "FrameResult", "Operation", "RbERIMemory", "VSMTMemory", "entity_records", "frozen_policy"]

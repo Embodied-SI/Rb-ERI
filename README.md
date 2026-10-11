@@ -112,9 +112,9 @@ uv pip install huggingface_hub pillow
 ```
 
 ```python
-from vsmt_memory import VSMTMemory, CameraIntrinsics, CameraPose
+from vsmt_memory import RbERIMemory, CameraIntrinsics, CameraPose
 
-memory = VSMTMemory.from_pretrained()        # weights downloaded on first use (about 450 MB with DINOv2)
+memory = RbERIMemory.from_pretrained()       # weights downloaded on first use (about 450 MB with DINOv2)
 intrinsics = CameraIntrinsics(fx=525.0, fy=525.0, cx=319.5, cy=239.5, width=640, height=480)
 
 for rgb, depth_m, world_from_camera, masks in my_stream():      # your camera, odometry and segmenter

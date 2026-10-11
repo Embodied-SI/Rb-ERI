@@ -62,9 +62,9 @@ files already in a cache are used without network access:
 
 ```python
 import numpy as np
-from vsmt_memory import VSMTMemory, CameraIntrinsics, CameraPose
+from vsmt_memory import RbERIMemory, CameraIntrinsics, CameraPose
 
-memory = VSMTMemory.from_pretrained()          # heads trained on SAM 2.1 masks (no sam2 package needed), seed 7
+memory = RbERIMemory.from_pretrained()         # heads trained on SAM 2.1 masks (no sam2 package needed), seed 7
 intrinsics = CameraIntrinsics(fx=525.0, fy=525.0, cx=319.5, cy=239.5, width=640, height=480)
 
 for rgb, depth_m, world_from_camera, masks in my_stream():          # your sensor, odometry and segmenter
@@ -144,8 +144,8 @@ for a planner or world model), `memory.memory` (the full record: version chains,
 
 ## 5. Weights
 
-`VSMTMemory.from_pretrained(front_end="sam2", seed=7)` loads the round-1 Rb-ERI cost heads of one training seed, the
-ReID projection head shared by all compared methods, and the existence threshold `tau_r` that was selected on
+`RbERIMemory.from_pretrained(front_end="sam2", seed=7)` (`VSMTMemory` is the same class) loads the round-1 Rb-ERI
+cost heads of one training seed, the ReID projection head shared by all compared methods, and the existence threshold `tau_r` that was selected on
 validation for that front end (0.25 for SAM 2.1). Each file is checked against the release manifest and against the
 digest recorded by the freeze that preceded the test run.
 
