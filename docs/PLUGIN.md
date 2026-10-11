@@ -32,8 +32,8 @@ estimate poses, segment images (except through the optional SAM 2.1 generator), 
 Python 3.11 or 3.12. From a clone of this repository:
 
 ```bash
-git clone https://github.com/JingzeSun/VSMT.git
-cd VSMT
+git clone https://github.com/Embodied-SI/Rb-ERI.git
+cd Rb-ERI
 uv sync
 uv pip install huggingface_hub pillow
 ```

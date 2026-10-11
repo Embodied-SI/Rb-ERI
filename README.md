@@ -102,7 +102,7 @@ RGB, metric depth, camera intrinsics, a camera pose and instance masks, and retu
 same frozen code that produced the results above, with the released weights.
 
 ```bash
-git clone https://github.com/JingzeSun/VSMT.git && cd VSMT
+git clone https://github.com/Embodied-SI/Rb-ERI.git && cd Rb-ERI
 uv sync
 uv pip install huggingface_hub pillow
 ```
@@ -294,7 +294,7 @@ When using the data, please also cite ProcTHOR, AI2-THOR, DINOv2 and SAM 2.
   author = {Sun, Jingze},
   year   = {2026},
   note   = {Manuscript under review},
-  url    = {https://github.com/JingzeSun/VSMT}
+  url    = {https://github.com/Embodied-SI/Rb-ERI}
 }
 ```
 

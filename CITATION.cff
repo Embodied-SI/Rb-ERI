@@ -6,7 +6,7 @@ authors:
   - family-names: Sun
     given-names: Jingze
     affiliation: The University of Sydney
-repository-code: "https://github.com/JingzeSun/VSMT"
+repository-code: "https://github.com/Embodied-SI/Rb-ERI"
 license: Apache-2.0
 url: "https://huggingface.co/Jsun0632"
 keywords:

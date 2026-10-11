@@ -21,7 +21,7 @@ for both front ends (`weights/<front>/<arm>.tar`), the ReID projection heads (`r
 ## Download and verify
 
 Every item is listed in `MANIFEST.json` with its sha256, size, restore path and (for tars) the directory tree digest. The
-release tools live in the code repository `JingzeSun/VSMT` (`ops/vsmt/hf_fetch.py`): it downloads the selected items at a
+release tools live in the code repository `Embodied-SI/Rb-ERI` (`ops/vsmt/hf_fetch.py`): it downloads the selected items at a
 pinned revision, checks every sha256, extracts each tar safely, recomputes the tree digest, and restores the original layout
 under a base directory (default `/root/autodl-tmp`) so the repository's scripts run unchanged:
 
