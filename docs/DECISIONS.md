@@ -3400,3 +3400,7 @@
   unchanged, 1,423 tests OK), Hugging Face references 90d8e39 (the release tooling, its tests and the manifests under
   `results/` keep the old identifiers), plug-in alias 6a1128e. The card upload waits for a valid local Hugging Face
   login (the stored token was rejected); the published cards keep the old wording until then.
+- **Cards uploaded (2026-10-11).** After the user logged in again (account Jsun0632, admin of Embodied-SI), only
+  `README.md` was uploaded to each repository from `ops/vsmt/hf_cards/` at 90d8e39: T0 commit `f23c78103d43`, T1
+  `98da174a10c6`, T2 `651e45b62380`, T3 `1c7417da6aca`; each live card equals its source. Data files, manifests, the
+  licence file and the revisions cited by the paper are unchanged.
