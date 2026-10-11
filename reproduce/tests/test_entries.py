@@ -11,7 +11,7 @@ import check_env  # noqa: E402
 import fetch_extras  # noqa: E402
 import l1_eval  # noqa: E402
 import paper  # noqa: E402
-from _common import REPO_ROOT, load_json  # noqa: E402
+from _common import REPO_ROOT, display, load_json  # noqa: E402
 
 
 class PaperEntryTests(unittest.TestCase):
@@ -27,7 +27,7 @@ class PaperEntryTests(unittest.TestCase):
         rows = paper.table_ii(load_json(REPO_ROOT / paper.STATISTICS))
         self.assertEqual(len(rows), 4)
         first = rows[0]
-        self.assertEqual((round(first["AssocOnly"], 3), round(first["VSMT-lean"], 3), round(first["lower_bound"], 3)),
+        self.assertEqual((round(first["AssocOnly"], 3), round(first["Rb-ERI"], 3), round(first["lower_bound"], 3)),
                          (0.642, 0.115, 0.467))
         self.assertEqual([row["fixed_order_step"] for row in rows],
                          ["1: holds", "1: holds", "2: holds", "3: does not hold"])
@@ -37,6 +37,13 @@ class L1EntryTests(unittest.TestCase):
     def test_run_labels_follow_the_s3_names(self) -> None:
         self.assertEqual(l1_eval.run_label({"arm": "VSMT-lean", "config_index": 2, "seed": 7}), "VSMT-lean-c02-s7")
         self.assertEqual(l1_eval.run_label({"arm": "TAF", "config_index": 3, "seed": None}), "TAF-c03")
+
+    def test_outputs_show_the_method_name_but_keep_paths(self) -> None:
+        self.assertEqual(display("VSMT-lean-c02-s7"), "Rb-ERI-c02-s7")
+        self.assertEqual(display({"VSMT-lean": {"arm": "VSMT-lean"}}), {"Rb-ERI": {"arm": "Rb-ERI"}})
+        for kept in ("audits/Rb-ERI-c02-s7/ep/VSMT-lean/node_audit.json", "C:\o\VSMT-lean\node_audit.json",
+                     "arms.VSMT-lean.training", "VSMT-lean-ctx", "vsmt_lean_s3_05_statistics_8d58475.json"):
+            self.assertEqual(display(kept), kept)
 
     def test_classification_separates_metrics_from_the_seal_chain(self) -> None:
         audit = {"report": {"node_prf1": 1, "size_and_cost": {"runtime_per_frame_s": 1}}, "trajectory_sha256": "a",

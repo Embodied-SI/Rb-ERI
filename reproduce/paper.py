@@ -15,8 +15,10 @@ checkout's files are not modified:
 4. optionally (``--build-pdf``, needs TeX) ``paper/tools/build.sh`` builds both PDF versions.
 
 It prints the rows of Table II (Missing residual rate and identity continuity of AssocOnly and Rb-ERI, the one-sided
-95% lower bound and the fixed-order step) and writes a report to ``outputs/reproduce/`` that lists every compared field and
-file with its SHA-256.  Exit codes: 0 everything
+95% lower bound and the fixed-order step) and writes to ``outputs/reproduce/``: ``rb_eri_l0_<tag>_<time>.json``, a report
+that lists every compared field and file with its SHA-256, and ``rb_eri_s3_06_reanalysis_<commit>.json``, the recomputed
+readings with the frozen export's arm key ``VSMT-lean`` shown as Rb-ERI (the comparison itself uses the export as
+written).  Exit codes: 0 everything
 reproduced; 3 a difference (listed); 2 a precondition is missing; 1 an unexpected error.
 """
 
@@ -32,7 +34,8 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _common import PAPER_TAG, Refusal, git, load_json, resolve, worktree, write_report  # noqa: E402
+from _common import (ARM_KEY, DISPLAY_NAME, PAPER_TAG, Refusal, display, git, load_json, resolve, worktree,  # noqa: E402
+                     write_report)
 
 STATISTICS = "results/vsmt_lean_s3_05_statistics_8d58475.json"
 COMMITTED_REANALYSIS = "results/vsmt_lean_s3_06_reanalysis_cd3ee83.json"
@@ -87,7 +90,7 @@ def table_ii(statistics: dict[str, Any]) -> list[dict[str, Any]]:
             step = steps[number - 1]
             rows.append({"front_end": label, "metric": name,
                          "AssocOnly": block["main_table"][metric]["AssocOnly"]["mean"],
-                         "VSMT-lean": block["main_table"][metric]["VSMT-lean"]["mean"],
+                         DISPLAY_NAME: block["main_table"][metric][ARM_KEY]["mean"],
                          "lower_bound": gate["lower_bound_two_level"],
                          "fixed_order_step": f"{number}: " + ("holds" if step["passed"] else "does not hold")})
     return rows
@@ -102,6 +105,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     started = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     report: dict[str, Any] = {"level": "L0", "tag": PAPER_TAG, "started_utc": started, "python": sys.version.split()[0],
+                              "arm_display_names": {ARM_KEY: DISPLAY_NAME},
                               "versions": versions(), "steps": [], "differences": [],
                               "hash_note": "SHA-256 of text files is taken over the bytes the scripts write (LF line endings, "
                                            "as stored in git); a Windows checkout with core.autocrlf has CRLF copies"}
@@ -121,7 +125,13 @@ def main(argv: list[str] | None = None) -> int:
                 report["differences"].append(f"s3_06_reanalysis exited with {step['exit']} (3: the test statistics "
                                              "do not recompute; 2: refused)")
             else:
-                recomputed = load_json(tree / f"results/vsmt_lean_s3_06_reanalysis_{commit[:7]}.json")
+                export = tree / f"results/vsmt_lean_s3_06_reanalysis_{commit[:7]}.json"
+                recomputed = load_json(export)
+                renamed = write_report(f"rb_eri_s3_06_reanalysis_{commit[:7]}.json", {
+                    "display_names": {ARM_KEY: DISPLAY_NAME},
+                    "source": f"results/{export.name} written by ops/vsmt/s3_06_reanalysis.py in a worktree of {PAPER_TAG}",
+                    "source_sha256": hashlib.sha256(export.read_bytes()).hexdigest(), **display(recomputed)})
+                report["renamed_export"] = str(renamed)
                 differing, extra = compare_reanalysis(recomputed, load_json(tree / COMMITTED_REANALYSIS))
                 report["reanalysis_fields_differing"] = differing
                 report["reanalysis_inputs_added_after_the_committed_run"] = extra
@@ -158,12 +168,12 @@ def main(argv: list[str] | None = None) -> int:
         print(f"[paper] refused: {exc}", file=sys.stderr)
         return 2
     report["written_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-    path = write_report(f"l0_{PAPER_TAG}_{started.replace(':', '')}.json", report)
+    path = write_report(f"rb_eri_l0_{PAPER_TAG}_{started.replace(':', '')}.json", report)
 
     print("\nTable II (test split, read once; means over five seeds):")
-    print(f"{'Front end':26s} {'Metric':22s} {'AssocOnly':>9s} {'VSMT-lean':>9s} {'Lower bound':>11s}  Fixed-order step")
+    print(f"{'Front end':26s} {'Metric':22s} {'AssocOnly':>9s} {DISPLAY_NAME:>9s} {'Lower bound':>11s}  Fixed-order step")
     for row in report.get("table_ii", []):
-        print(f"{row['front_end']:26s} {row['metric']:22s} {row['AssocOnly']:9.3f} {row['VSMT-lean']:9.3f} "
+        print(f"{row['front_end']:26s} {row['metric']:22s} {row['AssocOnly']:9.3f} {row[DISPLAY_NAME]:9.3f} "
               f"{row['lower_bound']:11.3f}  {row['fixed_order_step']}")
     for note in report.get("notes", []):
         print(f"note: {note}")

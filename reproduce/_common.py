@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import contextlib
 import json
+import re
 import shutil
 import subprocess
 import tempfile
@@ -15,6 +16,11 @@ PAPER_TAG = "paper-v1"
 FREEZE_COMMIT = "dea8c20f58144882752f2bc3936b87fd6568ef45"
 S3_05_RUN_COMMIT = "8d58475"
 REPORT_DIR = REPO_ROOT / "outputs" / "reproduce"
+#: The method's name (decision D-224-NAME). The frozen code, its exports and the release keep the arm key ``VSMT-lean``;
+#: what the entry points write themselves shows the name instead.
+DISPLAY_NAME = "Rb-ERI"
+ARM_KEY = "VSMT-lean"
+_ARM_TOKEN = re.compile(r"(?<![\w./\\])VSMT-lean(?!-ctx)(?![\w/\\]|\.\w)")
 
 
 class Refusal(Exception):
@@ -42,7 +48,7 @@ def resolve(ref: str) -> str:
 def worktree(ref: str, *, keep: bool = False) -> Iterator[Path]:
     """A clean, detached worktree of ``ref`` in a short temporary path, removed afterwards unless ``keep``."""
 
-    path = Path(tempfile.mkdtemp(prefix="vsmt-"))
+    path = Path(tempfile.mkdtemp(prefix="rb-eri-"))
     path.rmdir()
     git("worktree", "add", "--detach", str(path), ref)
     try:
@@ -52,6 +58,20 @@ def worktree(ref: str, *, keep: bool = False) -> Iterator[Path]:
             git("worktree", "remove", "--force", str(path), check=False)
             shutil.rmtree(path, ignore_errors=True)
             git("worktree", "prune", check=False)
+
+
+def display(value: Any) -> Any:
+    """A copy of a JSON value in which the arm key ``VSMT-lean`` reads ``Rb-ERI`` (in keys, run labels and text).
+
+    File paths (``.../VSMT-lean/...``), key paths (``VSMT-lean.x``) and the registered arm ``VSMT-lean-ctx`` are kept."""
+
+    if isinstance(value, dict):
+        return {display(key): display(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [display(item) for item in value]
+    if isinstance(value, str):
+        return _ARM_TOKEN.sub(DISPLAY_NAME, value)
+    return value
 
 
 def load_json(path: Path) -> Any:

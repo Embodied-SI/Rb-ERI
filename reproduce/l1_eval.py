@@ -27,8 +27,9 @@ AVX-512, torch 2.8.0, numpy 2.3.2); elsewhere a few near-tie decisions can diffe
 the report separates metric differences from differences in the error decomposition and the seal chain.  The
 instance-mask ReID head is in the T0 addendum; ``reproduce/fetch_extras.py --dest <data root>`` restores it.
 
-Outputs (``outputs/reproduce/l1-<front>-<scope>-<time>/``, not tracked): the audits, ``comparison.json`` and, for test,
-``REPRODUCTION_READ.json``.  Exit codes: 0 all audits ran and every metric equals the paper's; 3 a difference or a
+Outputs (``outputs/reproduce/rb_eri_l1-<front>-<scope>-<time>/``, not tracked): the audits, ``comparison.json`` and, for
+test, ``REPRODUCTION_READ.json``.  Run labels, directory names and ``comparison.json`` name the method Rb-ERI (``--runs``
+accepts both names); the ``node_audit.json`` files are written by the frozen audit and keep its arm key ``VSMT-lean``.  Exit codes: 0 all audits ran and every metric equals the paper's; 3 a difference or a
 failed audit; 2 a precondition is missing.
 """
 
@@ -47,8 +48,8 @@ from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _common import (REPO_ROOT, REPORT_DIR, S3_05_RUN_COMMIT, Refusal, git, load_json, resolve,  # noqa: E402
-                     worktree)
+from _common import (ARM_KEY, DISPLAY_NAME, REPO_ROOT, REPORT_DIR, S3_05_RUN_COMMIT, Refusal, display, git,  # noqa: E402
+                     load_json, resolve, worktree)
 
 RECEIPT = REPO_ROOT / "results" / "vsmt_lean_s3_04_freeze_dea8c20.json"
 SERVER_ROOT = "/root/autodl-tmp/"
@@ -105,7 +106,7 @@ def task_list(args: argparse.Namespace, receipt: dict[str, Any], tree: Path, out
     split = "validation" if args.scope == "probe" else "test"
     runs = receipt["fronts"][front]["test_runs"]
     if args.runs:
-        wanted = {name.strip() for name in args.runs.split(",")}
+        wanted = {name.strip().replace(DISPLAY_NAME, ARM_KEY, 1) for name in args.runs.split(",")}
         runs = [run for run in runs if f"{run['arm']}:{run['seed']}" in wanted or run["arm"] in wanted]
     if args.scope == "probe":
         episodes = list(receipt["fronts"][front]["probe_episodes"])
@@ -129,14 +130,14 @@ def task_list(args: argparse.Namespace, receipt: dict[str, Any], tree: Path, out
                     "--geometry-root", str(root / f"vsmt_private/s3-02-geometry-{TAG}/{split}"),
                     "--episode-id", episode, "--arm", run["arm"], "--config", json.dumps(run["config"]),
                     "--descriptor", "reid_projection:vitb14", "--weights", str(reid), "--mask-source", MASK_SOURCES[front],
-                    "--output-root", str(out / "audits" / run_label(run)), "--metrics-only", "--manifest-split", split]
+                    "--output-root", str(out / "audits" / display(run_label(run))), "--metrics-only", "--manifest-split", split]
             if heads is not None:
                 argv += ["--heads", str(heads)]
             if args.scope == "test":
                 argv += ["--test-receipt", str(root / "vsmt_private/s3-04-dea8c20/freeze_receipt.json")]
             tasks.append({"run": run_label(run), "arm": run["arm"], "episode": episode, "argv": argv, "cwd": str(tree),
-                          "audit": str(out / "audits" / run_label(run) / episode / run["arm"] / "node_audit.json"),
-                          "log": str(out / "logs" / f"{run_label(run)}-{episode}.log")})
+                          "audit": str(out / "audits" / display(run_label(run)) / episode / run["arm"] / "node_audit.json"),
+                          "log": str(out / "logs" / f"{display(run_label(run))}-{episode}.log")})
     return tasks
 
 
@@ -178,7 +179,7 @@ def main(argv: list[str] | None = None) -> int:
                         help="required for --scope test: this run is a further read of the test split")
     args = parser.parse_args(argv)
     stamp = time.strftime("%Y-%m-%dT%H%M%SZ", time.gmtime())
-    out = REPORT_DIR / f"l1-{args.front}-{args.scope}-{stamp}"
+    out = REPORT_DIR / f"rb_eri_l1-{args.front}-{args.scope}-{stamp}"
     try:
         if args.scope == "test" and not args.acknowledge_post_publication_reread:
             raise Refusal("--scope test re-reads the test split, which the paper read once; add "
@@ -219,6 +220,7 @@ def main(argv: list[str] | None = None) -> int:
     summary = {"front": args.front, "scope": args.scope, "code_commit": commit, "receipt_sha256": receipt["receipt_sha256"],
                "python": sys.version.split()[0], "platform": platform.platform(), "rows": rows, "problems": problems,
                "counts": {result: sum(r["result"] == result for r in rows) for result in {r["result"] for r in rows}}}
+    summary = display({**summary, "arm_display_names": {ARM_KEY: DISPLAY_NAME}})
     (out / "comparison.json").write_text(json.dumps(summary, indent=1), encoding="utf-8")
     print(f"[l1] {summary['counts']}; comparison: {out / 'comparison.json'}")
     return 3 if problems else 0

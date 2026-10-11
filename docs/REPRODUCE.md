@@ -15,7 +15,9 @@ packages it did not install, so repeat the second command after it, or use `uv s
 `uv run`, because `check_env.py` inspects the interpreter that runs it. Each creates its own clean worktree
 of the commit it needs (`paper-v1` for L0, the S3-05 run commit `8d58475` for L1) in the system's temporary directory
 with `git worktree add`, which registers it in this clone's `.git`, and removes it afterwards (`--keep-worktree` keeps
-the L0 one for inspection). Reports go to `outputs/reproduce/` (not tracked).
+the L0 one for inspection). Reports go to `outputs/reproduce/` (not tracked); their names start with `rb_eri_` and they
+name the method Rb-ERI. L0 also writes `rb_eri_s3_06_reanalysis_<commit>.json`, the recomputed readings with the arm key
+shown as Rb-ERI; the comparisons use the frozen exports as written, which keep the arm key `VSMT-lean`.
 
 | Goal | Command | Needs | Time (measured) |
 |---|---|---|---|
@@ -118,8 +120,8 @@ Every number in the paper comes from a committed export in `results/`; tables an
 scripts and are never edited by hand. A machine-readable index, `results/vsmt_lean_s3_06_paper_index_154043e.json`
 (the current one; `…_cd3ee83.json` is the earlier index written with the reanalysis, before the S3-07 exports; a run of
 `reproduce/paper.py` writes a third one in its temporary worktree and discards it), lists each item with its file, fields, command and the SHA-256 of every file checked against the stage manifests.
-That index uses the numbering of the first draft (`table_1` … `table_8`, `appendix_*`); the mapping to the current
-paper is:
+That index uses the numbering of the first draft (`table_1` … `table_8`, `appendix_*`), and the committed files keep the
+earlier name (`vsmt_lean_*`, arm key `VSMT-lean` = Rb-ERI); the mapping to the current paper is:
 
 | Current paper | Index items | Files (`results/`) and fields |
 |---|---|---|
